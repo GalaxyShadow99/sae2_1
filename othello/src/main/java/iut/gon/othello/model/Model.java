@@ -4,6 +4,7 @@ import coordinate.Coordinate;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 import iut.gon.othello.model.state.IState;
+import iut.gon.othello.model.state.State;
 import iut.gon.othello.model.tokens.Pawn;
 import iut.gon.othello.model.tokens.Token;
 
@@ -37,10 +38,10 @@ public class Model {
         currentState = currentState.removeLine(new RemoveLine(line, ring));
     }
     
-    public List<Set<Coordinate>> getPawnsLines(){
-        return IState.getPawnsLines(currentState.board()); 
+    public List<Set<Coordinate>> getPawnsLines() {
+        return currentState.getPawnsLines(currentState.board());
     }
-    
+  
     public Map<Coordinate, Token> getBoard(){
         return currentState.board(); 
     }
@@ -50,7 +51,7 @@ public class Model {
     }
     
     public boolean isInField(Coordinate c) {
-        return currentState.isInField(c); 
+        return ((State) currentState).isInField(c); 
     }
     
     public List<Coordinate> getRings(Team team){
@@ -79,3 +80,4 @@ public class Model {
     public IState getCurrentState() {
         return currentState; 
     }
+}
