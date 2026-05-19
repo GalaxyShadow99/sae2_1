@@ -24,56 +24,63 @@ public abstract class Coordinate {
 		if (mode.equals(Mode.FLAT)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.q,this.r, this.s+1);
+		return new CoordinateCube(this.getQ(),this.getR(), this.getS()+1);
 	}
 	
 	public Coordinate NE(Mode mode) {
 		if (mode.equals(Mode.FLAT)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.q+1,this.r, this.s);
+		return new CoordinateCube(this.getQ()+1,this.getR(), this.getS());
 	}
 	
 	public Coordinate E(Mode mode) {
 		if (mode.equals(Mode.POINTY)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.x+1,this.y);
+		return new CoordinateDoubled(this.getX()+1,this.getY());
 	}
 	
 	public Coordinate O(Mode mode) {
 		if (mode.equals(Mode.POINTY)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.x-1,this.y);
+		return new CoordinateDoubled(this.getX()-1,this.getY());
 	}
 	
 	public Coordinate N(Mode mode) {
 		if (mode.equals(Mode.POINTY)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.x,this.y+1);
+		return new CoordinateDoubled(this.getX(),this.getY()+1);
 	}
 	
 	public Coordinate S(Mode mode) {
 		if (mode.equals(Mode.POINTY)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.x,this.y-1);
+		return new CoordinateDoubled(this.getX(),this.getY()-1);
 	}
 	
 	public Coordinate SO(Mode mode) {
 		if (mode.equals(Mode.FLAT)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.q-1,this.r, this.s);
+		return new CoordinateCube(this.getQ()-1,this.getR(), this.getS());
 	}
 	
-	public Coordinate SE(Mode mode) {
+	public Coordinate SE(Mode mode) {s
 		if (mode.equals(Mode.FLAT)){
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.q,this.r, this.s-1);
+		return new CoordinateCube(this.getQ(),this.getR(), this.getS()-1);
 	}
+	
+	
+	public abstract int getX();
+	public abstract int getY();
+	public abstract int getQ();
+	public abstract int getR();
+	public abstract int getS();
 	
 }

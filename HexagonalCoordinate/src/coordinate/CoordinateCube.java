@@ -23,4 +23,16 @@ public class CoordinateCube extends Coordinate{
 	public int getS() {
 		return s;
 	}
+
+	@Override
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

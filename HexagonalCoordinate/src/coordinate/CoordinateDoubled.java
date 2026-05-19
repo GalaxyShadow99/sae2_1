@@ -1,12 +1,12 @@
 package coordinate;
 
-public class CoordinateDoubled extends Coordinate throws DifferentAxisException {
+public class CoordinateDoubled extends Coordinate{
 	
 	private int x; 
 	private int y; 
 	
 	
-	public CoordinateDoubled(int x, int y) {
+	public CoordinateDoubled(int x, int y) throws DifferentAxisException {
 		this.x = x;
 		this.y = y; 
 	}
@@ -29,5 +29,26 @@ public class CoordinateDoubled extends Coordinate throws DifferentAxisException 
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+
+	@Override
+	public int getQ() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int getR() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int getS() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
