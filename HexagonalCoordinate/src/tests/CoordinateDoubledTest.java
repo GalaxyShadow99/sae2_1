@@ -1,11 +1,9 @@
 package tests;
+import coordinate.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import coordinate.CoordinateDoubled;
-import coordinate.DifferentAxisException;
 
 class CoordinateDoubledTest {
 
