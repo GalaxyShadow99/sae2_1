@@ -1,0 +1,13 @@
+!SESSION 2026-05-19 09:20:01.961 -----------------------------------------------
+eclipse.buildId=4.38.0.20251204-0849
+java.version=21.0.10
+java.vendor=Ubuntu
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=fr_FR
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product -data /home/thomas/Bureau/IUT/SAE201/groupe15-av-bn-gg-tn_/HexagonalCoordinate
+
+!ENTRY ch.qos.logback.classic 1 0 2026-05-19 09:20:04.935
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2026-05-19 09:20:06.092
+!MESSAGE Logback config file: /home/thomas/Bureau/IUT/SAE201/groupe15-av-bn-gg-tn_/HexagonalCoordinate/.metadata/.plugins/org.eclipse.m2e.logback/logback.2.7.101.20251017-1242.xml
