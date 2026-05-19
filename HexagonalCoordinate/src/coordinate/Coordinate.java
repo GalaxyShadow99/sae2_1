@@ -24,7 +24,7 @@ public abstract class Coordinate {
 				throw new DifferentAxisException();
 			}
 		}else {
-			if ((this.getQ() != to.getQ()) || (this.getR() != to.getR()) || (this.getS() != to.getS())) {
+			if ((this.getQ() != to.getQ()) && (this.getR() != to.getR()) && (this.getS() != to.getS())) {
 				throw new DifferentAxisException();
 			}
 		}
