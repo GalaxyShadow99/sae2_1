@@ -1,4 +1,4 @@
-package iut.gon.othello;
+package coordinate;
 
 public class CoordinateCube extends Coordinate{
 	private int q;
@@ -23,5 +23,4 @@ public class CoordinateCube extends Coordinate{
 	public int getS() {
 		return s;
 	}
-	
 }
