@@ -5,19 +5,26 @@ import java.util.List;
 
 public abstract class Coordinate {
 	public Point to2DCoordinate() {
-		return Point;
+		return new Point(getX(), getY());
 	}
 	
 	public Coordinate toDir(Mode mode, Direction direction){
-		return Coordinate;
+		return null;
 	}
 	
 	public List<Coordinate> getNeighbors(Mode mode) {
-		return List<Coordinate>;
+		return null;
 	}
 	
-	public List<Coordinate> beetween(Mode mode, Coordinate to){
-		return List<Coordinate>;
+	public List<Coordinate> beetween(Mode mode, Coordinate to) throws DifferentAxisException{
+		if (mode.equals(Mode.FLAT)) {
+			if ((this.getX() != to.getX()) || (this.getY() != to.getY())) {
+				throw new DifferentAxisException();
+			}
+		}else {
+			
+		}
+		return null;
 	}
 	
 	public Coordinate NO(Mode mode) {
@@ -69,7 +76,7 @@ public abstract class Coordinate {
 		return new CoordinateCube(this.getQ()-1,this.getR(), this.getS());
 	}
 	
-	public Coordinate SE(Mode mode) {s
+	public Coordinate SE(Mode mode) {
 		if (mode.equals(Mode.FLAT)){
 			throw new InvalidParameterException();
 		}

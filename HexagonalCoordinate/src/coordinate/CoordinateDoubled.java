@@ -6,8 +6,7 @@ public class CoordinateDoubled extends Coordinate{
 	private int y; 
 	
 	
-	public CoordinateDoubled(int x, int y) throws DifferentAxisException {
-		
+	public CoordinateDoubled(int x, int y) {
 		this.x = x;
 		this.y = y; 
 	}

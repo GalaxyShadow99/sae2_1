@@ -12,14 +12,9 @@ class CoordinateDoubledTest {
 	@Test
 	void testConstructeur() {
 		CoordinateDoubled c;
-		try {
-			c = new CoordinateDoubled(6, 8);
-			assertEquals(6, c.getX()); 
-			assertEquals(8, c.getY()); 
-
-		} catch (DifferentAxisException e) {
-			e.printStackTrace();
-		} 
+		c = new CoordinateDoubled(6, 8);
+		assertEquals(6, c.getX()); 
+		assertEquals(8, c.getY()); 
 	}
 	
 	@Test
@@ -41,25 +36,17 @@ class CoordinateDoubledTest {
 	@Test
 	void testSetX() {
 		CoordinateDoubled c;
-		try {
-			c = new CoordinateDoubled(6, 8);
-			c.setX(9);
-			assertEquals(9, c.getX());
-		} catch (DifferentAxisException e) {
-			e.printStackTrace();
-		} 
+		c = new CoordinateDoubled(6, 8);
+		c.setX(9);
+		assertEquals(9, c.getX()); 
 	}
 		
 	@Test
 	void testSetY() {
 		CoordinateDoubled c;
-		try {
-			c = new CoordinateDoubled(6, 8);
-			c.setY(9);
-			assertEquals(9, c.getY());
-		} catch (DifferentAxisException e) {
-			e.printStackTrace();
-		} 
+		c = new CoordinateDoubled(6, 8);
+		c.setY(9);
+		assertEquals(9, c.getY()); 
 	}
 
 }
