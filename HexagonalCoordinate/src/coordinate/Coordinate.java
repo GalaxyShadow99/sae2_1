@@ -8,31 +8,59 @@ public abstract class Coordinate {
 	public Point to2DCoordinate() {
 		return new Point(getX(), getY());
 	}
-	
-	public Coordinate toDir(Mode mode, Direction direction){
+
+	public Coordinate toDir(Mode mode, Direction direction) {
+		if (direction.equals(Direction.N)) {
+
+		} else if (direction.equals(Direction.NE)) {
+			return this.NE(mode);
+		} else if (direction.equals(Direction.NO)) {
+			return this.NO(mode);
+		} else if (direction.equals(Direction.E)) {
+			return this.E(mode);
+		} else if (direction.equals(Direction.O)) {
+			return this.O(mode);
+		} else if (direction.equals(Direction.S)) {
+			return this.S(mode);
+		} else if (direction.equals(Direction.SE)) {
+			return this.SE(mode);
+		} else if (direction.equals(Direction.SO)) {
+			return this.SO(mode);
+		}
 		return null;
 	}
-	
+
 	public List<Coordinate> getNeighbors(Mode mode) {
 		return null;
 	}
-	
-	public List<Coordinate> beetween(Mode mode, Coordinate to) throws DifferentAxisException{
+
+	public List<Coordinate> beetween(Mode mode, Coordinate to) throws DifferentAxisException {
 		List<Coordinate> resultat = new ArrayList<>();
 		if (mode.equals(Mode.FLAT)) {
 			if ((this.getX() != to.getX()) || (this.getY() != to.getY())) {
 				throw new DifferentAxisException();
 			}
-		}else {
+		} else {
 			if ((this.getQ() != to.getQ()) && (this.getR() != to.getR()) && (this.getS() != to.getS())) {
 				throw new DifferentAxisException();
 			}
 		}
-		
-		
-		int pasQ = 0; if (this.getQ() < to.getQ()) pasQ = 1; else if (this.getQ() > to.getQ()) pasQ = -1;
-		int pasR = 0; if (this.getR() < to.getR()) pasR = 1; else if (this.getR() > to.getR()) pasR = -1;
-		int pasS = 0; if (this.getS() < to.getS()) pasS = 1; else if (this.getS() > to.getS()) pasS = -1;
+
+		int pasQ = 0;
+		if (this.getQ() < to.getQ())
+			pasQ = 1;
+		else if (this.getQ() > to.getQ())
+			pasQ = -1;
+		int pasR = 0;
+		if (this.getR() < to.getR())
+			pasR = 1;
+		else if (this.getR() > to.getR())
+			pasR = -1;
+		int pasS = 0;
+		if (this.getS() < to.getS())
+			pasS = 1;
+		else if (this.getS() > to.getS())
+			pasS = -1;
 
 		int qActuel = this.getQ() + pasQ;
 		int rActuel = this.getR() + pasR;
@@ -46,68 +74,71 @@ public abstract class Coordinate {
 		}
 		return resultat;
 	}
-	
+
 	public Coordinate NO(Mode mode) {
-		if (mode.equals(Mode.FLAT)){
+		if (mode.equals(Mode.FLAT)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.getQ(),this.getR(), this.getS()+1);
+		return new CoordinateCube(this.getQ(), this.getR(), this.getS() + 1);
 	}
-	
+
 	public Coordinate NE(Mode mode) {
-		if (mode.equals(Mode.FLAT)){
+		if (mode.equals(Mode.FLAT)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.getQ()+1,this.getR(), this.getS());
+		return new CoordinateCube(this.getQ() + 1, this.getR(), this.getS());
 	}
-	
+
 	public Coordinate E(Mode mode) {
-		if (mode.equals(Mode.POINTY)){
+		if (mode.equals(Mode.POINTY)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.getX()+1,this.getY());
+		return new CoordinateDoubled(this.getX() + 1, this.getY());
 	}
-	
+
 	public Coordinate O(Mode mode) {
-		if (mode.equals(Mode.POINTY)){
+		if (mode.equals(Mode.POINTY)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.getX()-1,this.getY());
+		return new CoordinateDoubled(this.getX() - 1, this.getY());
 	}
-	
+
 	public Coordinate N(Mode mode) {
-		if (mode.equals(Mode.POINTY)){
+		if (mode.equals(Mode.POINTY)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.getX(),this.getY()+1);
+		return new CoordinateDoubled(this.getX(), this.getY() + 1);
 	}
-	
+
 	public Coordinate S(Mode mode) {
-		if (mode.equals(Mode.POINTY)){
+		if (mode.equals(Mode.POINTY)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateDoubled(this.getX(),this.getY()-1);
+		return new CoordinateDoubled(this.getX(), this.getY() - 1);
 	}
-	
+
 	public Coordinate SO(Mode mode) {
-		if (mode.equals(Mode.FLAT)){
+		if (mode.equals(Mode.FLAT)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.getQ()-1,this.getR(), this.getS());
+		return new CoordinateCube(this.getQ() - 1, this.getR(), this.getS());
 	}
-	
+
 	public Coordinate SE(Mode mode) {
-		if (mode.equals(Mode.FLAT)){
+		if (mode.equals(Mode.FLAT)) {
 			throw new InvalidParameterException();
 		}
-		return new CoordinateCube(this.getQ(),this.getR(), this.getS()-1);
+		return new CoordinateCube(this.getQ(), this.getR(), this.getS() - 1);
 	}
-	
-	
+
 	public abstract int getX();
+
 	public abstract int getY();
+
 	public abstract int getQ();
+
 	public abstract int getR();
+
 	public abstract int getS();
-	
+
 }
