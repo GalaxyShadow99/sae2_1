@@ -1,5 +1,7 @@
 package coordinate;
 
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Coordinate {
@@ -20,8 +22,19 @@ public abstract class Coordinate {
     }
 
     public List<Coordinate> getNeighbors(Mode mode) {
-        return null;
-    }
+	    List<Coordinate> neighbors = new ArrayList<>();
+	    
+	    for (Direction dir : Direction.values()) {
+	        try {
+	            Coordinate neighbor = this.toDir(mode, dir);
+	            neighbors.add(neighbor);
+	        } catch (InvalidParameterException e){
+	        	
+	        }
+	    }
+	    
+	    return neighbors;
+	}
 
     public abstract List<Coordinate> between(Mode mode, Coordinate to) throws DifferentAxisException;
 
