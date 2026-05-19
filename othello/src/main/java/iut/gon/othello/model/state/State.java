@@ -1,7 +1,10 @@
 package iut.gon.othello.model.state;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.HashMap;
+=======
+>>>>>>> othello-factory
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,9 +20,15 @@ public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate
 	Team turn;
 	List<Set<Coordinate>> lines;
 	
+	public State(Map<Coordinate, Token> grid, Team white, ArrayList<Set<Coordinate>> arrayList) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
 		
 	}
+	
 	
 	public boolean isInField(Coordinate c) {
 		return (Boolean) null;
