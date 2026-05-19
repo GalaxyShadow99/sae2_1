@@ -2,46 +2,27 @@ package iut.gon.othello.model.state;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import coordinate.Coordinate;
+import coordinate.Mode;
+
 import iut.gon.othello.model.Team;
+
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
+
 import iut.gon.othello.model.tokens.Token;
+import iut.gon.othello.model.tokens.Pawn;
+import iut.gon.othello.model.tokens.Ring;
 
-public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) implements IState {
-	Map<Coordinate, Token> board;
-	Team turn;
-	List<Set<Coordinate>> lines;
-	
-	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
-		
-	}
-	
-	public boolean isInField(Coordinate c) {
-		return (Boolean) null;
-	}
-	
-	public Team winner() {
-		return null;
-	}
-	
-	public boolean equals(Object o) {
-		return (Boolean) null;  // à générer à la fin
-	}
-	
-	public int hashcode() {
-		return (Integer) null;  // à générer à la fin
-	}
-
-
-    @Override
-    public boolean isInField(Coordinate c) {
-        return this.board.containsKey(c);
-    }
+public record State(
+        HashMap<Coordinate,Token> board,
+        Team turn,
+        List<Set<Coordinate>> lines ) implements IState
 
     @Override
     public Map<Team, List<Coordinate>> rings() {
@@ -71,12 +52,6 @@ public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate
         
         return null;
     }
-
-    @Override
-	public Team turn() {
-		// TODO Auto-generated method stub
-		return null;
-	}
     
     @Override
     public IState move(Move move) {
@@ -189,54 +164,90 @@ public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate
         return moves;
     }
 
-@Override
-public List<Set<Coordinate>> getPawnsLines(Map<Coordinate, Token> boardToScan) {
-    Set<Set<Coordinate>> uniqueLines = new HashSet<>();
-    
-    for (Coordinate startCoord : boardToScan.keySet()) {
-        Token startToken = boardToScan.get(startCoord);
+	@Override
+	public List<Set<Coordinate>> getPawnsLines(Map<Coordinate, Token> boardToScan) {
+	    Set<Set<Coordinate>> uniqueLines = new HashSet<>();
+	    
+	    for (Coordinate startCoord : boardToScan.keySet()) {
+	        Token startToken = boardToScan.get(startCoord);
+	        
+	        if (startToken == null || !(startToken.getClass().getSimpleName().equals("Pawn"))) {
+	            continue;
+	        }
+	        
+	        Team teamToMatch = startToken.getTeam();
+	        
+	        for (coordinate.Direction dir : coordinate.Direction.values()) {
+	            Set<Coordinate> currentLine = new HashSet<>();
+	            currentLine.add(startCoord);
+	            
+	            Coordinate current = startCoord;
+	            boolean isValidLine = true;
+	            
+	            for (int i = 0; i < 4; i++) {
+	                try {
+	                    current = current.toDir(coordinate.Mode.POINTY, dir);
+	                    
+	                    if (!boardToScan.containsKey(current)) {
+	                        isValidLine = false;
+	                        break;
+	                    }
+	                    
+	                    Token nextToken = boardToScan.get(current);
+	                    if (nextToken == null || !(nextToken.getClass().getSimpleName().equals("Pawn")) || nextToken.getTeam() != teamToMatch) {
+	                        isValidLine = false;
+	                        break;
+	                    }
+	                    
+	                    currentLine.add(current);
+	                    
+	                } catch (IllegalArgumentException | java.security.InvalidParameterException e) {
+	                    isValidLine = false;
+	                    break;
+	                }
+	            }
+	            
+	            if (isValidLine && currentLine.size() == 5) {
+	                uniqueLines.add(currentLine);
+	            }
+	        }
+	    }
+	    
+	    return new ArrayList<>(uniqueLines);
+	}
+	
+	@Override
+    public IState removeToken(Coordinate c) {
+        Map<Coordinate, Token> newBoard = new HashMap<>(this.board);
         
-        if (startToken == null || !(startToken.getClass().getSimpleName().equals("Pawn"))) {
-            continue;
+        if (newBoard.containsKey(c)) {
+            newBoard.put(c, null);
         }
         
-        Team teamToMatch = startToken.getTeam();
-        
-        for (coordinate.Direction dir : coordinate.Direction.values()) {
-            Set<Coordinate> currentLine = new HashSet<>();
-            currentLine.add(startCoord);
-            
-            Coordinate current = startCoord;
-            boolean isValidLine = true;
-            
-            for (int i = 0; i < 4; i++) {
-                try {
-                    current = current.toDir(coordinate.Mode.POINTY, dir);
-                    
-                    if (!boardToScan.containsKey(current)) {
-                        isValidLine = false;
-                        break;
-                    }
-                    
-                    Token nextToken = boardToScan.get(current);
-                    if (nextToken == null || !(nextToken.getClass().getSimpleName().equals("Pawn")) || nextToken.getTeam() != teamToMatch) {
-                        isValidLine = false;
-                        break;
-                    }
-                    
-                    currentLine.add(current);
-                    
-                } catch (IllegalArgumentException | java.security.InvalidParameterException e) {
-                    isValidLine = false;
-                    break;
-                }
-            }
-            
-            if (isValidLine && currentLine.size() == 5) {
-                uniqueLines.add(currentLine);
-            }
-        }
+        return new State(newBoard, this.turn, this.lines);
     }
-    
-    return new ArrayList<>(uniqueLines);
+
+    @Override
+    public IState toggleToken(Coordinate position, Team team, Class<?> tokenClass) {
+        Map<Coordinate, Token> newBoard = new HashMap<>(this.board);
+        Token existingToken = newBoard.get(position);
+
+        try {
+            java.lang.reflect.Constructor<?> constructor = tokenClass.getConstructors()[0];
+            
+            Token generatedToken = (Token) constructor.newInstance(team);
+            if (existingToken != null && 
+                existingToken.getClass().equals(tokenClass) && 
+                existingToken.getTeam() == team) {
+                newBoard.put(position, null);
+            } else {
+                newBoard.put(position, generatedToken);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur de token : " + e.getMessage());
+        }
+
+        return new State(newBoard, this.turn, this.lines);
+    }
 }
