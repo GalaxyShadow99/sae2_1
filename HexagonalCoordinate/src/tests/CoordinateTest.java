@@ -13,6 +13,13 @@ import coordinate.Direction;
 import coordinate.Mode;
 import coordinate.Point;
 
+
+
+// A FAIRE UNE FOIS LE PROJET RELATIVEMENT TERMINE !
+
+
+
+
 //  On crée une fausse classe , toute simple juste pour pouvoir tester l'abstrait
 class FausseCoordinate extends Coordinate {
     @Override
@@ -24,30 +31,48 @@ class FausseCoordinate extends Coordinate {
     
     public List<Coordinate> between(Mode mode, Coordinate to) throws DifferentAxisException { return null; }
 	@Override
-	public int getX() {
+	public Coordinate NO(Mode mode) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 	@Override
-	public int getY() {
+	public Coordinate NE(Mode mode) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 	@Override
-	public int getQ() {
+	public Coordinate E(Mode mode) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 	@Override
-	public int getR() {
+	public Coordinate O(Mode mode) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 	@Override
-	public int getS() {
+	public Coordinate N(Mode mode) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
+	@Override
+	public Coordinate S(Mode mode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Coordinate SO(Mode mode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Coordinate SE(Mode mode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+    
+    
 }
 
 // Ici donc nos tests basiques sur la classe Abstraite (sur un objet FausseCoordinate plus précisément...)
