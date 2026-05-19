@@ -1,4 +1,5 @@
-package coordinate;
+package tests;
+import coordinate.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
