@@ -1,14 +1,8 @@
 package iut.gon.othello.model.state;
 
 import java.util.ArrayList;
-<<<<<<< HEAD
 import java.util.HashMap;
-<<<<<<< HEAD
-=======
->>>>>>> othello-factory
-=======
 import java.util.HashSet;
->>>>>>> origin/othello-state_
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,49 +19,10 @@ import iut.gon.othello.model.tokens.Token;
 import iut.gon.othello.model.tokens.Pawn;
 import iut.gon.othello.model.tokens.Ring;
 
-<<<<<<< HEAD
-public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) implements IState {
-	Map<Coordinate, Token> board;
-	Team turn;
-	List<Set<Coordinate>> lines;
-	
-	public State(Map<Coordinate, Token> grid, Team white, ArrayList<Set<Coordinate>> arrayList) {
-		// TODO Auto-generated constructor stub
-	}
-
-
-	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
-		
-	}
-	
-	
-	public boolean isInField(Coordinate c) {
-		return (Boolean) null;
-	}
-	
-	public Team winner() {
-		return null;
-	}
-	
-	public boolean equals(Object o) {
-		return (Boolean) null;  // à générer à la fin
-	}
-	
-	public int hashcode() {
-		return (Integer) null;  // à générer à la fin
-	}
-
-
-    @Override
-    public boolean isInField(Coordinate c) {
-        return this.board.containsKey(c);
-    }
-=======
 public record State(
         HashMap<Coordinate,Token> board,
         Team turn,
         List<Set<Coordinate>> lines ) implements IState
->>>>>>> origin/othello-state_
 
     @Override
     public Map<Team, List<Coordinate>> rings() {
