@@ -6,9 +6,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import coordinate.Coordinate;
 import iut.gon.othello.model.Team;
+import iut.gon.othello.model.actions.Move;
+import iut.gon.othello.model.actions.RemoveLine;
+import iut.gon.othello.model.tokens.Token;
 
 public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) implements IState {
+	Map<Coordinate, Token> board;
+	Team turn;
+	List<Set<Coordinate>> lines;
+	
+	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
+		
+	}
+	
+	public boolean isInField(Coordinate c) {
+		return (Boolean) null;
+	}
+	
+	public Team winner() {
+		return null;
+	}
+	
+	public boolean equals(Object o) {
+		return (Boolean) null;  // à générer à la fin
+	}
+	
+	public int hashcode() {
+		return (Integer) null;  // à générer à la fin
+	}
+
 
     @Override
     public boolean isInField(Coordinate c) {
@@ -44,7 +72,12 @@ public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate
         return null;
     }
 
-
+    @Override
+	public Team turn() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+    
     @Override
     public IState move(Move move) {
         if (this.lines != null && !this.lines.isEmpty()) {
@@ -54,9 +87,11 @@ public record State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate
         Coordinate from = move.getFrom();
         Coordinate to = move.getTo();
 
+
         if (!isInField(from) || !isInField(to)) {
             throw new IndexOutOfBoundsException();
         }
+
 
         Token token = this.board.get(from);
         
@@ -204,5 +239,4 @@ public List<Set<Coordinate>> getPawnsLines(Map<Coordinate, Token> boardToScan) {
     }
     
     return new ArrayList<>(uniqueLines);
-}
 }
