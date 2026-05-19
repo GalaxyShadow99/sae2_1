@@ -5,8 +5,11 @@ import java.util.Map;
 
 import coordinate.Coordinate;
 import coordinate.CoordinateCube;
+import iut.gon.othello.model.Team;
 import iut.gon.othello.model.state.IState;
 import iut.gon.othello.model.state.State;
+import iut.gon.othello.model.tokens.Pawn;
+import iut.gon.othello.model.tokens.Ring;
 import iut.gon.othello.model.tokens.Token;
 
 public class FactoryCube implements IFactory {
