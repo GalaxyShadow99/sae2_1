@@ -5,6 +5,10 @@ import java.util.Map;
 import java.util.Set;
 
 import coordinate.Coordinate;
+import iut.gon.othello.model.Team;
+import iut.gon.othello.model.actions.Move;
+import iut.gon.othello.model.actions.RemoveLine;
+import iut.gon.othello.model.tokens.Token;
 
 public interface IState {
 	public IState move(Move move);

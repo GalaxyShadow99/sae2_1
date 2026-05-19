@@ -1,9 +1,11 @@
 package iut.gon.othello.model.tokens;
 
+import iut.gon.othello.model.Team;
+
 public class Ring extends Token {
 
 	public Ring(Team color) {
-		super(team);
+		super(color);
 	}
 	
 	public String charRepr() {

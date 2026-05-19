@@ -1,9 +1,11 @@
 package iut.gon.othello.model.tokens;
 
+import iut.gon.othello.model.Team;
+
 public class Pawn extends Token {
 
 	public Pawn(Team color) {
-		super(team);
+		super(color);
 	}
 	
 	public void ChangeTeam()

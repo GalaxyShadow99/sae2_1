@@ -4,8 +4,10 @@ import coordinate.Coordinate;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 import iut.gon.othello.model.state.IState;
+import iut.gon.othello.model.tokens.Pawn;
 import iut.gon.othello.model.tokens.Token;
 
+import java.util.ArrayList;
 import java.util.List; 
 import java.util.Set;
 import java.util.Map; 
@@ -36,7 +38,7 @@ public class Model {
     }
     
     public List<Set<Coordinate>> getPawnsLines(){
-        return IState.getPawnsLine(currentState.board()); 
+        return IState.getPawnsLines(currentState.board()); 
     }
     
     public Map<Coordinate, Token> getBoard(){

@@ -5,18 +5,22 @@ import java.util.Map;
 import java.util.Set;
 
 import coordinate.Coordinate;
+import iut.gon.othello.model.Team;
+import iut.gon.othello.model.actions.Move;
+import iut.gon.othello.model.actions.RemoveLine;
+import iut.gon.othello.model.tokens.Token;
 
 public class State implements IState {
 	Map<Coordinate, Token> board;
 	Team turn;
 	List<Set<Coordinate>> lines;
 	
-	public void State(Map<Coordinate> board, Team turn, List<Set<Coordinate>> lines) {
+	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
 		
 	}
 	
 	public boolean isInField(Coordinate c) {
-		return null;
+		return (Boolean) null;
 	}
 	
 	public Team winner() {
@@ -24,11 +28,11 @@ public class State implements IState {
 	}
 	
 	public boolean equals(Object o) {
-		return null;  // à générer à la fin
+		return (Boolean) null;  // à générer à la fin
 	}
 	
 	public int hashcode() {
-		return null;  // à générer à la fin
+		return (Integer) null;  // à générer à la fin
 	}
 
 	@Override
@@ -71,6 +75,7 @@ public class State implements IState {
 	public Team turn() {
 		// TODO Auto-generated method stub
 		return null;
+	}
 
 	@Override
 	public List<Set<Coordinate>> getPawnsLines(Map<Coordinate, Token> board) {

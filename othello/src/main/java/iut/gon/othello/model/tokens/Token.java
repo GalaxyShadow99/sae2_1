@@ -1,5 +1,7 @@
 package iut.gon.othello.model.tokens;
 
+import iut.gon.othello.model.Team;
+
 public abstract class Token {
 	protected Team team;
 
