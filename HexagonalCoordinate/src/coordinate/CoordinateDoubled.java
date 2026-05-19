@@ -8,12 +8,6 @@ public class CoordinateDoubled extends Coordinate{
 	
 	public CoordinateDoubled(int x, int y) throws DifferentAxisException {
 		
-		if (Math.abs(x % 2) != Math.abs(y % 2)) {
-	        throw new DifferentAxisException(
-	            "Coordonnée invalide [" + y + ", " + x + "] : " +
-	            "La ligne et la colonne doivent avoir la même parité sur ce plateau hexagonal."
-	        );
-	    }
 		this.x = x;
 		this.y = y; 
 	}
