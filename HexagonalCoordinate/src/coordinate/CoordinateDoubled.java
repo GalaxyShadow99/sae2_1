@@ -1,6 +1,6 @@
 package coordinate;
 
-public class CoordinateDoubled extends Coordinate{
+public class CoordinateDoubled extends Coordinate throws DifferentAxisException {
 	
 	private int x; 
 	private int y; 
