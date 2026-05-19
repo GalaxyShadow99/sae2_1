@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import coordinate.Coordinate;
-
+import coordinate.DifferentAxisException;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
@@ -16,9 +16,9 @@ public interface IState {
     Map<Coordinate, Token> board();
     Team turn();
     List<Set<Coordinate>> lines();
-    IState move(Move move);
+    IState move(Move move) throws DifferentAxisException;
     IState removeLine(RemoveLine line);
-    List<Coordinate> availableMoves(Coordinate ringPosition);
+    Set<Coordinate> availableMoves(Coordinate ringPosition);
     Map<Team,List<Coordinate>> rings();
     Team winner();
     List<Set<Coordinate>> getPawnsLines(Map<Coordinate,Token> board);

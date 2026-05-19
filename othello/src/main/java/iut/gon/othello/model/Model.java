@@ -1,6 +1,7 @@
 package iut.gon.othello.model;
 
 import coordinate.Coordinate;
+import coordinate.DifferentAxisException;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 import iut.gon.othello.model.state.IState;
@@ -19,18 +20,18 @@ public class Model {
     private IState currentState;
 
     public Model(IState state) {
-        this.currentState = currentState;
+        this.currentState = state;
     }
 
     public void setCurrentState(IState state) {
-        this.currentState = currentState;
+        this.currentState = state;
     }
     
     public Set<Coordinate> movesFrom(Coordinate from) {
         return currentState.availableMoves(from); 
     }
     
-    public void moveRing(Coordinate from, Coordinate to) {
+    public void moveRing(Coordinate from, Coordinate to) throws DifferentAxisException {
         currentState = currentState.move(new Move(from, to));
     }
     
