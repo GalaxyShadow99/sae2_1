@@ -1,5 +1,6 @@
 package iut.gon.othello.model.state;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,9 +16,15 @@ public class State implements IState {
 	Team turn;
 	List<Set<Coordinate>> lines;
 	
+	public State(Map<Coordinate, Token> grid, Team white, ArrayList<Set<Coordinate>> arrayList) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void State(Map<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) {
 		
 	}
+	
 	
 	public boolean isInField(Coordinate c) {
 		return (Boolean) null;
