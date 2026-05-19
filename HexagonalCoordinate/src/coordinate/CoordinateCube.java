@@ -93,8 +93,11 @@ public class CoordinateCube extends Coordinate {
         return resultat;
     }
 
-	@Override
-	public Point to2DCoordinate() {
-		return null;
-	}
+    @Override
+    public Point to2DCoordinate() {
+        int y = this.r + 5;
+        int x = 2 * this.q + this.r + 9;
+        
+        return new Point(x, y);
+    }
 }
