@@ -95,12 +95,12 @@ public class FactoryCube implements IFactory {
 
     @Override
     public IState emptyState() {
-        return new State(generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
     public IState testState() {
-        Map<Coordinate, Token> grid = generateEmptyGrid();
+        HashMap<Coordinate, Token> grid = (HashMap<Coordinate, Token>) generateEmptyGrid();
         try {
             grid.put(new CoordinateCube(5, -4, -1), new Pawn(Team.WHITE));
             grid.put(new CoordinateCube(1, -2, 1), new Pawn(Team.WHITE));
@@ -141,7 +141,7 @@ public class FactoryCube implements IFactory {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }       
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>)grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
@@ -157,7 +157,7 @@ public class FactoryCube implements IFactory {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }       
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
     
     @Override
@@ -189,7 +189,7 @@ public class FactoryCube implements IFactory {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }       
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
        
 }
 }

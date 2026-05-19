@@ -97,7 +97,7 @@ public class FactoryDoubled implements IFactory {
 
     @Override
     public IState emptyState() {
-        return new State(generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>)generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
@@ -131,7 +131,7 @@ public class FactoryDoubled implements IFactory {
         grid.put(toDoubled(3, 0), new Ring(Team.WHITE));
         grid.put(toDoubled(1, 1), new Ring(Team.WHITE));
         
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
@@ -141,7 +141,7 @@ public class FactoryDoubled implements IFactory {
         
         grid.put(toDoubled(-5, -1), new Pawn(Team.BLACK));
         
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
@@ -153,7 +153,7 @@ public class FactoryDoubled implements IFactory {
         grid.put(toDoubled(-1, 1), new Pawn(Team.BLACK));
         grid.put(toDoubled(-5, -1), new Pawn(Team.BLACK));
         
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
     @Override
@@ -186,6 +186,6 @@ public class FactoryDoubled implements IFactory {
         grid.put(toDoubled(3, 0), new Ring(Team.WHITE));
         grid.put(toDoubled(1, 1), new Ring(Team.WHITE));
         
-        return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
+        return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 }
