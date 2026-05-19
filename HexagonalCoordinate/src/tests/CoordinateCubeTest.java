@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import coordinate.CoordinateCube;
 
-public class CoordinateDoubledCubeTest {
+public class CoordinateCubeTest {
 
 	
 	@Test
