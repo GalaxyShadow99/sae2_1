@@ -93,10 +93,20 @@ public class CoordinateCube extends Coordinate {
         return resultat;
     }
 
+<<<<<<< HEAD
 	@Override
 	public Point to2DCoordinate() {
 		    int x2D = 2 * this.getQ() + this.getR();
 		    int y2D = this.getR();
 		    return new Point(x2D, y2D);
 	}
+=======
+    @Override
+    public Point to2DCoordinate() {
+        int y = this.r + 5;
+        int x = 2 * this.q + this.r + 9;
+        
+        return new Point(x, y);
+    }
+>>>>>>> d458d3501aa92be6589fcae3bf3e1a7377586b9e
 }
