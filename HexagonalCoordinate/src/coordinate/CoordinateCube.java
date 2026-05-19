@@ -5,7 +5,10 @@ public class CoordinateCube extends Coordinate{
 	private int r;
 	private int s;
 	
-	public CoordinateCube(int q, int r, int s){
+	public CoordinateCube(int q, int r, int s) throws IllegalArgumentException{
+		if(q + r + s != 0) {
+            throw new IllegalArgumentException("Coordonnées cubiques invalides : q + r + s doit être égal à 0.");
+        }
 		this.q = q;
 		this.r = r;
 		this.s = s;

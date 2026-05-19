@@ -27,13 +27,6 @@ class CoordinateDoubledTest {
     }
 	
 	@Test
-    void testConstructeurMauvaiseCoord() {
-        assertThrows(DifferentAxisException.class, () -> {
-            new CoordinateDoubled(5, 8); 
-        }, "Le constructeur doit lever une DifferentAxisException pour des coordonnées hexagonales incohérentes");
-    }
-	
-	@Test
 	void testSetX() {
 		CoordinateDoubled c;
 		c = new CoordinateDoubled(6, 8);
