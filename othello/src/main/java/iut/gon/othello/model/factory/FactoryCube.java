@@ -68,8 +68,7 @@ public class FactoryCube implements IFactory {
 
 	    } catch (IllegalArgumentException e) {
 	        e.printStackTrace();
-	    }		// grid.put(new CoordinateCube(0, 0, 0), new Pawn(Team.BLACK));
-        // grid.put(new CoordinateCube(1, 0, -1), new Ring(Team.WHITE));
+	    }		
 		
 		return new State(grid);
 		
@@ -77,14 +76,141 @@ public class FactoryCube implements IFactory {
 
 	@Override
 	public IState stateForBlackLinesTest() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Coordinate, Token> grid = generateEmptyGrid();
+		
+		try {
+	        // PIONS BLANCS 
+	        grid.put(new CoordinateCube(5, -4, -1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(1, -2, 1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(3, -3, 0), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(-2, 5, -3), new Pawn(Team.WHITE));
+
+	        // PIONS NOIRS 
+	        grid.put(new CoordinateCube(2, -5, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -4, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -3, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -2, 0), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(3, -4, 1), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(0, -4, 4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -3, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -2, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, -1, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -1, 1), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(-2, -1, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-3, -1, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-4, -1, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, -1, 4), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(-5, 1, 4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 2, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 3, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 4, 1), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(3, 1, -4), new Pawn(Team.BLACK));
+	        
+	        grid.put(new CoordinateCube(0, 2, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, 3, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, 3, -3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(1, 3, -4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, 3, -5), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, 5, -4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(3, -2, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(4, -2, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(5, -2, -3), new Pawn(Team.BLACK));
+
+	        
+	        // ANNEAUX NOIRS 
+	        grid.put(new CoordinateCube(-3, -1, 4), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(1, 0, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 3, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 4, -2), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -1, -1), new Ring(Team.BLACK));
+
+	        // ANNEAUX BLANCS
+	        grid.put(new CoordinateCube(3, -2, -1), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(4, -2, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(3, 0, -3), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+
+	    } catch (IllegalArgumentException e) {
+	        e.printStackTrace();
+	    }		
+		
+		return new State(grid);
 	}
 
 	@Override
 	public IState stateForWhiteLinesTest() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Coordinate, Token> grid = generateEmptyGrid();
+		
+		try {
+	        // PIONS BLANCS 
+	        grid.put(new CoordinateCube(5, -4, -1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(1, -2, 1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(3, -3, 0), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(-2, 5, -3), new Pawn(Team.WHITE));
+
+	        // PIONS NOIRS 
+	        grid.put(new CoordinateCube(2, -5, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -4, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -3, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -2, 0), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(3, -4, 1), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(0, -4, 4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -3, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -2, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, -1, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -1, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, 0, 0), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(-1, 1, 0), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, -1, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-3, -1, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-4, -1, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, -1, 4), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(-5, 1, 4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 2, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 3, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-5, 4, 1), new Pawn(Team.BLACK));
+
+	        grid.put(new CoordinateCube(3, 1, -4), new Pawn(Team.BLACK));
+	        
+	        grid.put(new CoordinateCube(0, 2, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, 3, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, 3, -3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(1, 3, -4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(2, 3, -5), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-1, 5, -4), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(3, -2, 1), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(4, -2, -2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(5, -2, -3), new Pawn(Team.BLACK));
+
+	        
+	        // ANNEAUX NOIRS 
+	        grid.put(new CoordinateCube(-3, -1, 4), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(1, 0, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 3, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 4, -2), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -1, -1), new Ring(Team.BLACK));
+
+	        // ANNEAUX BLANCS
+	        grid.put(new CoordinateCube(3, -2, -1), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(4, -2, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(3, 0, -3), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+
+	    } catch (IllegalArgumentException e) {
+	        e.printStackTrace();
+	    }		
+		
+		return new State(grid);
+
 	}
 
 	@Override
@@ -128,8 +254,42 @@ public class FactoryCube implements IFactory {
 
 	@Override
 	public IState doubleLineStateTest() {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Coordinate, Token> grid = generateEmptyGrid();
+		
+		try {
+	        // PIONS BLANCS 
+	        grid.put(new CoordinateCube(1 -2, 1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(0 -1, 1), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(-1 -1, 2), new Pawn(Team.WHITE));
+	        grid.put(new CoordinateCube(2 -1, -1), new Pawn(Team.WHITE));
+
+	        // PIONS NOIRS 
+	        grid.put(new CoordinateCube(-1, -2, 3), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(0, -2, 2), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(1, -1, 0), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, -2, 0), new Pawn(Team.BLACK));
+	        grid.put(new CoordinateCube(-3, -2, -1), new Pawn(Team.BLACK));
+
+	        // ANNEAUX NOIRS 
+	        grid.put(new CoordinateCube(-3, -1, 4), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(1, 0, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 3, -1), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(-2, 4, -2), new Ring(Team.BLACK));
+	        grid.put(new CoordinateCube(2, -1, -1), new Ring(Team.BLACK));
+
+	        // ANNEAUX BLANCS
+	        grid.put(new CoordinateCube(3, -3, 0), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(5, -3, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(3, 0, -3), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+	        grid.put(new CoordinateCube(1, 1, -2), new Ring(Team.WHITE));
+
+	    } catch (IllegalArgumentException e) {
+	        e.printStackTrace();
+	    }		
+		
+		return new State(grid);
+	
 	}
 
 }
