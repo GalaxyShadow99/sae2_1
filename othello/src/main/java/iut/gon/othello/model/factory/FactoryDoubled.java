@@ -47,7 +47,8 @@ public class FactoryDoubled implements IFactory {
                     terrain.put(new CoordinateDoubled(x, y), null); 
                 }
             }
-            return terrain;    }
+            return terrain;    
+           }
 
     private void CoordonnesCommunes(Map<Coordinate, Token> grid) {
         // PIONS BLANCS COMMUNS
