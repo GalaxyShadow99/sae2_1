@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -200,6 +201,72 @@ class StateTest {
         assertNull(state.board().get(coord));
     }
 
+    @Test
+    void testWinnerBlackWins() {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(factory.emptyState().board());
+        
+        customBoard.put(new CoordinateDoubled(11, 5), new Ring(Team.WHITE));
+        customBoard.put(new CoordinateDoubled(13, 5), new Ring(Team.WHITE));
+        customBoard.put(new CoordinateDoubled(15, 5), new Ring(Team.WHITE));
+        
+        customBoard.put(new CoordinateDoubled(9, 5), new Ring(Team.BLACK));
+        customBoard.put(new CoordinateDoubled(7, 5), new Ring(Team.BLACK));
+        
+        IState state = new State(customBoard, Team.WHITE, new ArrayList<>());
+        
+        assertEquals(Team.BLACK, state.winner(), "Equipe Noire n'a plus que 2 anneaux, doivent être déclarés gagnants !");
+    }
+
+    @Test
+    void testAvailableMovesLogic() {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(factory.emptyState().board());
+        
+        Coordinate center = new CoordinateDoubled(9, 5);
+        customBoard.put(center, new Ring(Team.WHITE));
+        IState state = new State(customBoard, Team.WHITE, new ArrayList<>());
+        
+        Set<Coordinate> moves = state.availableMoves(center);
+        
+        assertFalse(moves.isEmpty(), "plateau vide donc pas de mvt possibles");
+        assertFalse(moves.contains(center), "anneau peut pas faire de sur place");
+        
+        Coordinate eastMove = new CoordinateDoubled(11, 5);
+        assertTrue(moves.contains(eastMove), "case à l'EST doit etre dans la liste des coups possibles");
+    }
+    
+    @Test
+    void testMoveExceptions() {
+        IFactory factory = new FactoryDoubled();
+        IState state = factory.testState(); // au blancs de jouer
+        
+        //  déplacer un Pion au lieu d'un Anneau 
+        Coordinate pawnPos = new CoordinateDoubled(15, 1);
+        Move movePawn = new Move(pawnPos, new CoordinateDoubled(13, 1));
+        assertThrows(IllegalArgumentException.class, () -> state.move(movePawn), 
+            "Déplacer un pion doit lever une IllegalArgumentException.");
+        
+        // déplacer l'anneau de l'adversaire
+        Coordinate blackRingPos = new CoordinateDoubled(11, 5); // Anneau noir
+        Move moveEnemy = new Move(blackRingPos, new CoordinateDoubled(9, 5));
+        assertThrows(IllegalArgumentException.class, () -> state.move(moveEnemy), 
+            "Jouer l'anneau adverse doit lever une IllegalArgumentException.");
+    }
+    
+    @Test
+    void testRemoveLineException() {
+        IFactory factory = new FactoryDoubled();
+        IState emptyState = factory.emptyState(); 
+        
+        Set<Coordinate> fakeLine = new HashSet<>();
+        fakeLine.add(new CoordinateDoubled(9, 5));
+        RemoveLine invalidAction = new RemoveLine(fakeLine, new CoordinateDoubled(9, 5));
+        
+        assertThrows(RuntimeException.class, () -> emptyState.removeLine(invalidAction), 
+            "supprimer une ligne quand y en a pas doit lever RuntimeException.");
+    }
+    
     @Test
     void testIsInField() {
         HashMap<Coordinate, Token> board = new HashMap<>();

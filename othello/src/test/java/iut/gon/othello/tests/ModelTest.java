@@ -221,6 +221,7 @@ class ModelTest {
         assertNull(model.getTokenAt(coord));
     }
  
+    
     @Test
     void testToggleToken() {
         IFactory factory = new FactoryDoubled();
