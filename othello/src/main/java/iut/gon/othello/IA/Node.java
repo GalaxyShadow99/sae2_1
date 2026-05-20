@@ -1,15 +1,14 @@
 package iut.gon.othello.IA;
-import java.util.List;
 
-import coordinate.Coordinate;
 import iut.gon.othello.model.actions.Action;
+import iut.gon.othello.model.state.IState;
 
 
 public class Node {
-	List<Coordinate> etat;
+	IState etat;
 	Node parents;
 	Action before;
-	public Node(List<Coordinate> etat, Node parents, Action before) {
+	public Node(IState etat, Node parents, Action before) {
 		super();
 		this.etat = etat;
 		this.parents = parents;
