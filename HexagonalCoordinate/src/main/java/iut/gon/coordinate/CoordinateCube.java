@@ -11,7 +11,7 @@ public class CoordinateCube extends Coordinate {
     private int s;
     
     /**
-     * Crée une coordonnée cubique (q, r, s) avec q + r + s = 0.
+     * Crée une coordonnée cubique (q, r, s) vérifiant q + r + s = 0.
      * @param q coordonnée q (int)
      * @param r coordonnée r (int)
      * @param s coordonnée s (int)
@@ -45,85 +45,51 @@ public class CoordinateCube extends Coordinate {
 
 
 
-	/**
-	 * Retourne la coordonnée au Nord-Ouest de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au NO
-	 */
+	
 	@Override
     public Coordinate NO(Mode mode) {
         return new CoordinateCube(this.q -1, this.r, this.s + 1);
     }
 
-    /**
-     * Retourne la coordonnée au Nord-Est de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée au NE
-     */
+   
     @Override
     public Coordinate NE(Mode mode) {
         return new CoordinateCube(this.q + 1, this.r - 1, this.s);
     }
 
-    /**
-     * Retourne la coordonnée à l'Est de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée à l'Est
-     */
+    
     @Override
     public Coordinate E(Mode mode) {
         if (mode == Mode.FLAT) throw new InvalidParameterException("E n'accepte pas le mode FLAT");
         return new CoordinateCube(this.q + 1, this.r, this.s - 1);
     }
 
-    /**
-     * Retourne la coordonnée à l'Ouest de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée à l'Ouest
-     */
+   
     @Override
     public Coordinate O(Mode mode) {
         if (mode == Mode.FLAT) throw new InvalidParameterException("O n'accepte pas le mode FLAT");
         return new CoordinateCube(this.q - 1, this.r, this.s + 1);
     }
 
-    /**
-     * Retourne la coordonnée au Nord de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée au Nord
-     */
     @Override
     public Coordinate N(Mode mode) {
         if (mode == Mode.POINTY) throw new InvalidParameterException("N n'accepte pas le mode POINTY");
         return new CoordinateCube(this.q, this.r - 1, this.s + 1); 
     }
 
-    /**
-     * Retourne la coordonnée au Sud de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée au Sud
-     */
+  
     @Override
     public Coordinate S(Mode mode) {
         if (mode == Mode.POINTY) throw new InvalidParameterException("S n'accepte pas le mode POINTY");
         return new CoordinateCube(this.q, this.r + 1, this.s - 1); 
     }
 
-    /**
-     * Retourne la coordonnée au Sud-Ouest de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée au SO
-     */
+    
     @Override
     public Coordinate SO(Mode mode) {
         return new CoordinateCube(this.q - 1, this.r + 1, this.s);
     }
 
-    /**
-     * Retourne la coordonnée au Sud-Est de celle-ci.
-     * @param mode mode d'affichage (Mode)
-     * @return Coordinate coordonnée au SE
-     */
     @Override
     public Coordinate SE(Mode mode) {
         return new CoordinateCube(this.q, this.r + 1, this.s - 1);

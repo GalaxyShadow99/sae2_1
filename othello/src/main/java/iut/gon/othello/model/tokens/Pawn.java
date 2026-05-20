@@ -21,7 +21,7 @@ public class Pawn extends Token {
 	}
 	
 	/**
-	 * Retourne la représentation Unicode du pion selon son équipe.
+	 * Retourne la représentation graphique du pion (selon son équipe).
 	 * @return String représentation du pion
 	 */
 	public String charRepr() {

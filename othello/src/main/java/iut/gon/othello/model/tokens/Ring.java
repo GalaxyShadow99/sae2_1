@@ -13,7 +13,7 @@ public class Ring extends Token {
 	}
 	
 	/**
-	 * Retourne la représentation Unicode de l'anneau selon son équipe.
+	 * Retourne la représentation graphique de l'anneau selon son équipe.
 	 * @return String représentation de l'anneau
 	 */
 	public String charRepr() {

@@ -33,7 +33,7 @@ public abstract class Coordinate {
 
     /**
      * Retourne la liste des voisins directs de cette coordonnée.
-     * @param mode mode d'affichage (Mode)
+     * @param mode d'affichage (Mode)
      * @return List<Coordinate> liste des voisins
      */
     public List<Coordinate> getNeighbors(Mode mode) {
@@ -64,7 +64,7 @@ public abstract class Coordinate {
     }
 
     /**
-     * Calcule la liste des coordonnées entre cette coordonnée et une destination.
+     * Calcule la liste des coordonnées entre deux positions.
      * @param mode mode d'affichage (Mode)
      * @param to coordonnée de destination (Coordinate)
      * @return List<Coordinate> coordonnées intermédiaires

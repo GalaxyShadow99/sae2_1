@@ -27,31 +27,17 @@ public class CoordinateDoubled extends Coordinate {
 		return x;
 	}
 
-	/**
-	 * Retourne la coordonnée au Nord-Ouest de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au NO
-	 */
+	
 	@Override
 	public Coordinate NO(Mode mode) {
 		return new CoordinateDoubled(this.x - 1, this.y - 1);
 	}
 
-	/**
-	 * Retourne la coordonnée au Nord-Est de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au NE
-	 */
 	@Override
 	public Coordinate NE(Mode mode) {
 		return new CoordinateDoubled(this.x + 1, this.y - 1);
 	}
 
-	/**
-	 * Retourne la coordonnée à l'Est de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée à l'Est
-	 */
 	@Override
 	public Coordinate E(Mode mode) {
 		if (mode == Mode.FLAT)
@@ -59,11 +45,6 @@ public class CoordinateDoubled extends Coordinate {
 		return new CoordinateDoubled(this.x + 2, this.y);
 	}
 
-	/**
-	 * Retourne la coordonnée à l'Ouest de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée à l'Ouest
-	 */
 	@Override
 	public Coordinate O(Mode mode) {
 		if (mode == Mode.FLAT)
@@ -71,11 +52,6 @@ public class CoordinateDoubled extends Coordinate {
 		return new CoordinateDoubled(this.x - 2, this.y);
 	}
 
-	/**
-	 * Retourne la coordonnée au Nord de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au Nord
-	 */
 	@Override
 	public Coordinate N(Mode mode) {
 		if (mode == Mode.POINTY)
@@ -83,11 +59,7 @@ public class CoordinateDoubled extends Coordinate {
 		return new CoordinateDoubled(this.x, this.y - 2);
 	}
 
-	/**
-	 * Retourne la coordonnée au Sud de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au Sud
-	 */
+	
 	@Override
 	public Coordinate S(Mode mode) {
 		if (mode == Mode.POINTY)
@@ -95,21 +67,13 @@ public class CoordinateDoubled extends Coordinate {
 		return new CoordinateDoubled(this.x, this.y + 2);
 	}
 
-	/**
-	 * Retourne la coordonnée au Sud-Ouest de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au SO
-	 */
+	
 	@Override
 	public Coordinate SO(Mode mode) {
 		return new CoordinateDoubled(this.x - 1, this.y + 1);
 	}
 
-	/**
-	 * Retourne la coordonnée au Sud-Est de celle-ci.
-	 * @param mode mode d'affichage (Mode)
-	 * @return Coordinate coordonnée au SE
-	 */
+	
 	@Override
 	public Coordinate SE(Mode mode) {
 		return new CoordinateDoubled(this.x + 1, this.y + 1);
