@@ -1,13 +1,13 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.security.InvalidParameterException;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
-import coordinate.CoordinateCube;
-import coordinate.Mode;
-import coordinate.DifferentAxisException;
-import coordinate.Coordinate;
-
+import coordinate.*;
 import java.security.InvalidParameterException;
 import java.util.List;
 

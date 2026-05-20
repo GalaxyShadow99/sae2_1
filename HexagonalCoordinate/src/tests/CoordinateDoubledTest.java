@@ -1,10 +1,12 @@
 package tests;
-import coordinate.*;
-
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+
 import java.security.InvalidParameterException;
 import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import coordinate.*;
 
 class CoordinateDoubledTest {
 

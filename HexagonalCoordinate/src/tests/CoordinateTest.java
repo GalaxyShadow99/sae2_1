@@ -23,16 +23,15 @@ class CoordinateTest {
             "Doit lever une InvalidParameterException si la direction n'accepte pas le mode fourni");
     }
 
-    @Test
+	@Test
     void testGetNeighbors() {
+        // Case centrale de la grille Doubled
         Coordinate coord = new CoordinateDoubled(5, 9);
         Mode mode = Mode.FLAT;
 
         List<Coordinate> neighbors = coord.getNeighbors(mode);
         
-       
-        assertEquals(6, neighbors.size(), 
-            "La liste doit contenir exactement 6 voisins valides, la boucle try/catch ayant ignoré les 2 directions invalides");
+        // Le sujet impose d'avoir strictement 6 voisins renvoyés !
+        assertEquals(6, neighbors.size(), "La liste doit contenir exactement 6 voisins pour ce mode.");
     }
-
 }
