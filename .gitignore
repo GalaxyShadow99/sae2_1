@@ -3,6 +3,8 @@
 **/target/
 
 *.class
+.classpath
+.project
 
 **/.idea
 **/.metadata
