@@ -15,10 +15,10 @@ public class Pawn extends Token {
 	
 	public String charRepr() {
 		if (getTeam() == Team.WHITE) {
-			return ".";
+			return "♙";
 		}
 		else {
-			return "x"; 
+			return "♟"; 
 		}
 	}
 	

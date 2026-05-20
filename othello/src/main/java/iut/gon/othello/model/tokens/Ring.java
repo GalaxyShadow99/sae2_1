@@ -10,10 +10,10 @@ public class Ring extends Token {
 	
 	public String charRepr() {
 		if (getTeam() == Team.WHITE) {
-			return "o";
+			return "◯";
 		}
 		else {
-			return "O"; 
+			return "●"; 
 		}
 	}
 	
