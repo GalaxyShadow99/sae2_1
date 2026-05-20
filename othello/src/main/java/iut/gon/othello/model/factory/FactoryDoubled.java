@@ -26,7 +26,7 @@ public class FactoryDoubled implements IFactory {
         HashMap<Coordinate, Token> terrain = new HashMap<>();
         
         int[][] limitesX = {
-                { 6, 12 }, // Ligne 0
+                { 6, 12 },
                 { 3, 15 }, 
                 { 2, 16 }, 
                 { 1, 17 }, 
@@ -36,7 +36,7 @@ public class FactoryDoubled implements IFactory {
                 { 1, 17 }, 
                 { 2, 16 }, 
                 { 3, 15 }, 
-                { 6, 12 }  // Ligne 10
+                { 6, 12 }
             };
 
             for (int y = 0; y <= 10; y++) {
@@ -102,19 +102,12 @@ public class FactoryDoubled implements IFactory {
     }
 
 
-    /**
-     * Crée un plateau vide sans aucun pion ni anneau.
-     * @return IState état vide
-     */
+
     @Override
     public IState emptyState() {
         return new State(generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état de test avec des pions et anneaux placés manuellement.
-     * @return IState état de test
-     */
     @Override
     public IState testState() {
         HashMap<Coordinate, Token> grid = generateEmptyGrid();
@@ -149,10 +142,6 @@ public class FactoryDoubled implements IFactory {
         return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état pour tester la détection de lignes de pions noirs.
-     * @return IState état pour test lignes noires
-     */
     @Override
     public IState stateForBlackLinesTest() {
         HashMap<Coordinate, Token> grid = generateEmptyGrid();
@@ -163,10 +152,6 @@ public class FactoryDoubled implements IFactory {
         return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état pour tester la détection de lignes de pions blancs.
-     * @return IState état pour test lignes blanches
-     */
     @Override
     public IState stateForWhiteLinesTest() {
         HashMap<Coordinate, Token> grid = generateEmptyGrid();
@@ -179,10 +164,7 @@ public class FactoryDoubled implements IFactory {
         return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état avec deux lignes de pions pour tester la gestion de lignes multiples.
-     * @return IState état avec lignes doubles
-     */
+
     @Override
     public IState doubleLineStateTest() {
         HashMap<Coordinate, Token> grid = generateEmptyGrid();

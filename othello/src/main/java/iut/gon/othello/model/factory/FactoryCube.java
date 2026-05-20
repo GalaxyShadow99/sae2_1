@@ -90,21 +90,12 @@ public class FactoryCube implements IFactory {
     }
 
 
-    // --- IMPLEMENTATION INTERFACE 
-
-    /**
-     * Crée un plateau vide sans aucun pion ni anneau.
-     * @return IState état vide
-     */
     @Override
     public IState emptyState() {
         return new State((HashMap<Coordinate, Token>) generateEmptyGrid(), Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état de test avec des pions et anneaux placés manuellement.
-     * @return IState état de test
-     */
+
     @Override
     public IState testState() {
         HashMap<Coordinate, Token> grid = (HashMap<Coordinate, Token>) generateEmptyGrid();
@@ -137,17 +128,13 @@ public class FactoryCube implements IFactory {
         return new State(grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état pour tester la détection de lignes de pions noirs.
-     * @return IState état pour test lignes noires
-     */
+ 
     @Override
     public IState stateForBlackLinesTest() {
         Map<Coordinate, Token> grid = generateEmptyGrid();
         try {
             CoordonnesCommunes(grid);
             
-            // Placement spécifique à BlackLinesTest
             grid.put(new CoordinateCube(-5, -1, 6), new Pawn(Team.BLACK)); // Corrigé pour s=6
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -155,10 +142,7 @@ public class FactoryCube implements IFactory {
         return new State((HashMap<Coordinate, Token>)grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
 
-    /**
-     * Crée un état pour tester la détection de lignes de pions blancs.
-     * @return IState état pour test lignes blanches
-     */
+ 
     @Override
     public IState stateForWhiteLinesTest() {
         Map<Coordinate, Token> grid = generateEmptyGrid();
@@ -175,10 +159,6 @@ public class FactoryCube implements IFactory {
         return new State((HashMap<Coordinate, Token>) grid, Team.WHITE, new ArrayList<Set<Coordinate>>());
     }
     
-    /**
-     * Crée un état avec deux lignes de pions pour tester la gestion de lignes multiples.
-     * @return IState état avec lignes doubles
-     */
     @Override
     public IState doubleLineStateTest() {
         Map<Coordinate, Token> grid = generateEmptyGrid();

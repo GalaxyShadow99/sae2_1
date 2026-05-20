@@ -16,7 +16,7 @@ public class MiniMaxAI implements AI {
     private Team myTeam;
     
     /**
-     * Crée une IA utilisant l'algorithme Minimax avec élagage alpha-bêta.
+     * Création de l'IA.
      * @param depthMax profondeur maximale de recherche (int)
      * @param state état initial du jeu (IState)
      * @param myTeam équipe contrôlée par l'IA (Team)
@@ -56,7 +56,7 @@ public class MiniMaxAI implements AI {
     }
     
     /**
-     * Algorithme Minimax avec élagage alpha-bêta pour évaluer les coups.
+     * Algorithme Minimax.
      * @param n nœud courant (Node)
      * @param depth profondeur restante (int)
      * @param currentTeam équipe dont c'est le tour (Team)
