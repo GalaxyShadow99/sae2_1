@@ -17,6 +17,7 @@ import iut.gon.othello.model.Team;
 import iut.gon.othello.model.factory.FactoryDoubled;
 import iut.gon.othello.model.factory.IFactory;
 import iut.gon.othello.model.state.IState;
+import iut.gon.othello.model.tokens.Ring;
 import iut.gon.othello.model.tokens.Token;
 
 class ModelTest {
@@ -64,7 +65,7 @@ class ModelTest {
 
         Model model = new Model(factory.testState());
 
-        Coordinate coord = new CoordinateDoubled(6, -3);
+        Coordinate coord = new CoordinateDoubled(6, 3);
 
         Token token = model.getTokenAt(coord);
 
@@ -78,7 +79,7 @@ class ModelTest {
 
         Model model = new Model(factory.emptyState());
 
-        Coordinate valid = new CoordinateDoubled(0, 0);
+        Coordinate valid = new CoordinateDoubled(9, 5);
         Coordinate invalid = new CoordinateDoubled(100, 100);
 
         assertTrue(model.isInField(valid));
@@ -137,7 +138,7 @@ class ModelTest {
 
         Model model = new Model(factory.emptyState());
 
-        Coordinate from = new CoordinateDoubled(0, 0);
+        Coordinate from = new CoordinateDoubled(5, 2);
         Coordinate to = new CoordinateDoubled(2, 0);
 
         try {
@@ -189,4 +190,39 @@ class ModelTest {
 
         assertEquals(state, model.getCurrentState());
     }
+    
+    @Test
+    void testRemoveToken() {
+        IFactory factory = new FactoryDoubled();
+ 
+        Model model = new Model(factory.testState());
+ 
+        Coordinate coord = new CoordinateDoubled(6, -3);
+        assertNotNull(model.getTokenAt(coord));
+ 
+        model.removeToken(coord);
+ 
+        assertNull(model.getTokenAt(coord));
+    }
+ 
+    @Test
+    void testToggleToken() {
+        IFactory factory = new FactoryDoubled();
+ 
+        Model model = new Model(factory.emptyState());
+ 
+        Coordinate coord = new CoordinateDoubled(0, 0);
+ 
+        assertNull(model.getTokenAt(coord));
+ 
+        model.toggleToken(coord, Team.WHITE, Ring.class);
+        Token token = model.getTokenAt(coord);
+        assertNotNull(token);
+        assertInstanceOf(Ring.class, token);
+        assertEquals(Team.WHITE, token.getTeam());
+ 
+        model.toggleToken(coord, Team.WHITE, Ring.class);
+        assertNull(model.getTokenAt(coord));
+    }
+
 }
