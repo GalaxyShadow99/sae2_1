@@ -3,6 +3,7 @@ package coordinate;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CoordinateCube extends Coordinate {
     private int q;
@@ -26,20 +27,8 @@ public class CoordinateCube extends Coordinate {
 
 
 
-	public void setQ(int q) {
-		this.q = q;
-	}
-
-
-
 	public int getR() {
 		return r;
-	}
-
-
-
-	public void setR(int r) {
-		this.r = r;
 	}
 
 
@@ -50,15 +39,9 @@ public class CoordinateCube extends Coordinate {
 
 
 
-	public void setS(int s) {
-		this.s = s;
-	}
-
-
-
 	@Override
     public Coordinate NO(Mode mode) {
-        return new CoordinateCube(this.q, this.r - 1, this.s + 1);
+        return new CoordinateCube(this.q -1, this.r, this.s + 1);
     }
 
     @Override
@@ -105,20 +88,20 @@ public class CoordinateCube extends Coordinate {
         if (!(to instanceof CoordinateCube)) throw new InvalidParameterException();
         CoordinateCube target = (CoordinateCube) to;
         
-        if ((this.q != target.q) && (this.r != target.r) && (this.s != target.s)) {
+        if ((this.q != target.getQ()) && (this.r != target.getR()) && (this.s != target.getS())) {
             throw new DifferentAxisException("Not on the same axis");
         }
 
         List<Coordinate> resultat = new ArrayList<>();
-        int pasQ = Integer.compare(target.q, this.q);
-        int pasR = Integer.compare(target.r, this.r);
-        int pasS = Integer.compare(target.s, this.s);
+        int pasQ = Integer.compare(target.getQ(), this.q);
+        int pasR = Integer.compare(target.getR(), this.r);
+        int pasS = Integer.compare(target.getS(), this.s);
 
         int qActuel = this.q + pasQ;
         int rActuel = this.r + pasR;
         int sActuel = this.s + pasS;
 
-        while (qActuel != target.q || rActuel != target.r || sActuel != target.s) {
+        while (qActuel != target.getQ() || rActuel != target.getR() || sActuel != target.getS()) {
             resultat.add(new CoordinateCube(qActuel, rActuel, sActuel));
             qActuel += pasQ;
             rActuel += pasR;
@@ -134,4 +117,25 @@ public class CoordinateCube extends Coordinate {
         
         return new Point(x, y);
     }
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(q, r, s);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoordinateCube other = (CoordinateCube) obj;
+		return q == other.q && r == other.r && s == other.s;
+	}
 }
