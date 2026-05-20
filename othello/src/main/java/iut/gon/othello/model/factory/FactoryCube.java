@@ -18,7 +18,7 @@ import iut.gon.othello.model.tokens.Token;
 public class FactoryCube implements IFactory {
 
     private Map<Coordinate, Token> generateEmptyGrid() {
-        Map<Coordinate, Token> terrain = new HashMap<>();
+        HashMap<Coordinate, Token> terrain = new HashMap<>();
         
         int[][] limitesQ = {
             { 1, 4 }, {-1, 5 }, {-2, 5 }, {-3, 5 }, {-4, 5 },
@@ -72,7 +72,6 @@ public class FactoryCube implements IFactory {
         grid.put(new CoordinateCube(1, 3, -4), new Pawn(Team.BLACK));
         grid.put(new CoordinateCube(2, 3, -5), new Pawn(Team.BLACK));
         grid.put(new CoordinateCube(-1, 5, -4), new Pawn(Team.BLACK));
-        grid.put(new CoordinateCube(3, -2, 1), new Pawn(Team.BLACK));
         grid.put(new CoordinateCube(4, -2, -2), new Pawn(Team.BLACK));
         grid.put(new CoordinateCube(5, -2, -3), new Pawn(Team.BLACK));
 
@@ -117,7 +116,7 @@ public class FactoryCube implements IFactory {
             grid.put(new CoordinateCube(-1, 3, -2), new Ring(Team.BLACK));
             grid.put(new CoordinateCube(1, 0, -1), new Ring(Team.BLACK));
             grid.put(new CoordinateCube(2, 0, -2), new Ring(Team.BLACK));
-            grid.put(new CoordinateCube(-2, 3, 1), new Ring(Team.BLACK));
+            grid.put(new CoordinateCube(-2, 3, -1), new Ring(Team.BLACK)); // fix pour somme = 0
             grid.put(new CoordinateCube(-2, 4, -2), new Ring(Team.BLACK));
 
             grid.put(new CoordinateCube(3, -2, -1), new Ring(Team.WHITE));
