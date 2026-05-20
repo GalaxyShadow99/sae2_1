@@ -9,3 +9,5 @@
 **/.recommenders
 .DS_Store
 **/.settings
+**/.project
+**/.classpath
