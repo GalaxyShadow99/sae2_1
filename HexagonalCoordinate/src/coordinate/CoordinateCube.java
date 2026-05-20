@@ -18,11 +18,45 @@ public class CoordinateCube extends Coordinate {
         this.s = s;
     }
 
-    public int getQ() { return q; }
-    public int getR() { return r; }
-    public int getS() { return s; }
 
-    @Override
+
+    public int getQ() {
+		return q;
+	}
+
+
+
+	public void setQ(int q) {
+		this.q = q;
+	}
+
+
+
+	public int getR() {
+		return r;
+	}
+
+
+
+	public void setR(int r) {
+		this.r = r;
+	}
+
+
+
+	public int getS() {
+		return s;
+	}
+
+
+
+	public void setS(int s) {
+		this.s = s;
+	}
+
+
+
+	@Override
     public Coordinate NO(Mode mode) {
         return new CoordinateCube(this.q, this.r - 1, this.s + 1);
     }

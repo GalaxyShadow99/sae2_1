@@ -13,7 +13,6 @@ import java.util.List;
 
 public class CoordinateCubeTest {
 
-    // --- TESTS DU CONSTRUCTEUR ---
 
     @Test
     void testConstructeurCentreValide() {
@@ -49,8 +48,7 @@ public class CoordinateCubeTest {
         }, "Une coordonnée négative dont la somme n'est pas 0 doit lever une IllegalArgumentException.");
     }
 
-    // --- TESTS DES DIRECTIONS ET MODES ---
-
+    
     @Test
     void testDirectionsPointyValides() {
         CoordinateCube centre = new CoordinateCube(0, 0, 0);
@@ -122,7 +120,6 @@ public class CoordinateCubeTest {
         assertEquals(0, so.getS());
     }
 
-    // --- TESTS DE LA METHODE BETWEEN ---
 
     @Test
     void testBetweenMemeAxe() throws DifferentAxisException {

@@ -8,11 +8,10 @@ import java.util.List;
 
 class CoordinateDoubledTest {
 
-    // --- TESTS INITIAUX ---
 
     @Test
     void testConstructeur() {
-        CoordinateDoubled c = new CoordinateDoubled(6, 8); // y=6, x=8
+        CoordinateDoubled c = new CoordinateDoubled(6, 8); 
         assertEquals(8, c.getX()); 
         assertEquals(6, c.getY()); 
     }
@@ -28,31 +27,31 @@ class CoordinateDoubledTest {
     
     @Test
     void testSetX() {
-        CoordinateDoubled c = new CoordinateDoubled(6, 8); // y=6, x=8
+        CoordinateDoubled c = new CoordinateDoubled(6, 8); 
         c.setX(9);
         assertEquals(9, c.getX()); 
     }
         
     @Test
     void testSetY() {
-        CoordinateDoubled c = new CoordinateDoubled(6, 8); // y=6, x=8
+        CoordinateDoubled c = new CoordinateDoubled(6, 8); 
         c.setY(9);
         assertEquals(9, c.getY()); 
     }
 
-    // --- TESTS DES DIRECTIONS ET MODES ---
+
 
     @Test
     void testDirectionsPointyValides() {
-        CoordinateDoubled centre = new CoordinateDoubled(5, 9); // [5,9]
+        CoordinateDoubled centre = new CoordinateDoubled(5, 9); 
         
         CoordinateDoubled est = (CoordinateDoubled) centre.E(Mode.POINTY);
         assertEquals(5, est.getY());
-        assertEquals(11, est.getX()); // x + 2
+        assertEquals(11, est.getX()); 
 
         CoordinateDoubled ouest = (CoordinateDoubled) centre.O(Mode.POINTY);
         assertEquals(5, ouest.getY());
-        assertEquals(7, ouest.getX()); // x - 2
+        assertEquals(7, ouest.getX()); 
     }
 
     @Test
@@ -73,11 +72,11 @@ class CoordinateDoubledTest {
         CoordinateDoubled centre = new CoordinateDoubled(5, 9);
         
         CoordinateDoubled nord = (CoordinateDoubled) centre.N(Mode.FLAT);
-        assertEquals(3, nord.getY()); // y - 2
+        assertEquals(3, nord.getY());
         assertEquals(9, nord.getX());
 
         CoordinateDoubled sud = (CoordinateDoubled) centre.S(Mode.FLAT);
-        assertEquals(7, sud.getY()); // y + 2
+        assertEquals(7, sud.getY());
         assertEquals(9, sud.getX());
     }
 
@@ -107,7 +106,6 @@ class CoordinateDoubledTest {
         assertEquals(8, so.getX()); 
     }
 
-    // --- TESTS DE LA METHODE BETWEEN ---
 
     @Test
     void testBetweenMemeAxeHorizontal() throws DifferentAxisException {
@@ -137,7 +135,6 @@ class CoordinateDoubledTest {
         }, "Doit lever une DifferentAxisException si les coordonnées ne sont pas sur le même axe.");
     }
 
-    // --- TESTS DU CONVERTISSEUR 2D ---
 
     @Test
     void testTo2DCoordinate() {
