@@ -1,8 +1,7 @@
-package iut.gon.othello;
+package iut.gon.othello.IA;
 
-import iut.gon.coordinate.Coordinate;
-import iut.gon.coordinate.Point;
 import iut.gon.othello.model.Team;
+import iut.gon.othello.model.actions.Action;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 import iut.gon.othello.model.state.IState;
@@ -13,20 +12,26 @@ import iut.gon.othello.model.tokens.Token;
 import iut.gon.othello.model.factory.FactoryDoubled;
 import iut.gon.othello.model.factory.IFactory; 
 
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.DifferentAxisException;
+import iut.gon.coordinate.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class CUIMain {
-
-    public static void main(String[] args) {
+public class IAMain {
+    
+    public static void main(String[] args) throws DifferentAxisException {
+        
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("=== BIENVENUE DANS OTHELLO ===");
+        System.out.println("=== BIENVENUE DANS OTHELLO HEXAGONAL ===");
         
         IState state;
+        
         try {
             IFactory factory = new FactoryDoubled();
             state = factory.emptyState();
@@ -35,10 +40,16 @@ public class CUIMain {
             scanner.close();
             return;
         }
-
+        
         state = initializeRandomRings(state);
-        System.out.println("Terrain initialisé avec 5 anneaux par équipe placés aléatoirement.\n");
-
+        System.out.println("Terrain initialisé avec 5 anneaux par équipe placés aleatoirement.\n");
+        
+        System.out.print("Choisissez la profondeur de l'IA (chiffre entier) : ");
+        int profondeur = readInt(scanner);
+        
+        AI ai = new MiniMaxAI(profondeur, state, Team.BLACK); 
+        
+        
         boolean gameRunning = true;
 
         while (gameRunning) {
@@ -46,18 +57,46 @@ public class CUIMain {
 
             Team winner = state.winner();
             if (winner != null) {
-                System.out.println("Félicitations ! L'équipe " + winner + " a gagné la partie !");
+                System.out.println("Félicitations ! L'equipe " + winner + " a gagné la partie !");
                 break;
             }
 
+            boolean isHumanTurn = (state.turn() == Team.WHITE);
+
             if (state.lines() != null && !state.lines().isEmpty()) {
-                System.out.println("Alignement de 5 pions detecté ! " + state.turn() + " doit supprimer une ligne et un anneau.");
-                state = handleRemoveLine(state, scanner);
-                continue;
+                System.out.println("Alignement de 5 pions detecte ! L'équipe " + state.turn() + " doit supprimer une ligne et un anneau.");
+                
+                if (isHumanTurn) {
+                    state = handleRemoveLine(state, scanner);
+                } else {
+                    System.out.println("L'IA (BLACK) reflechit pour supprimer une ligne...");
+                    Action aiAction = ai.chooseMove(state);
+                    try {
+                        state = state.removeLine((RemoveLine) aiAction);
+                        System.out.println("L'IA a retiré une ligne et un anneau.");
+                    } catch (Exception e) {
+                        System.out.println("Erreur IA lors du RemoveLine : " + e.getMessage());
+                        gameRunning = false;
+                    }
+                }
+                continue; 
             }
 
-            System.out.println("C'est au tour de l'équipe : " + state.turn());
-            state = handlePlayerMove(state, scanner);
+            System.out.println("C'est au tour de l'equipe : " + state.turn());
+            
+            if (isHumanTurn) {
+                state = handlePlayerMove(state, scanner);
+            } else {
+                System.out.println("L'IA (BLACK) reflechit a son deplacement...");
+                Action aiAction = ai.chooseMove(state);
+                try {
+                    state = state.move((Move) aiAction);
+                    System.out.println("L'IA a joue.");
+                } catch (Exception e) {
+                    System.out.println("Erreur IA lors du Move : " + e.getMessage());
+                    gameRunning = false;
+                }
+            }
         }
 
         scanner.close();
@@ -88,7 +127,7 @@ public class CUIMain {
     private static IState handlePlayerMove(IState state, Scanner scanner) {
         while (true) {
             System.out.println("\n--- Deplacement d'un anneau ---");
-            System.out.println("Regardez le plateau pour trouver un anneau de votre équipe (◯ ou ●).");
+            System.out.println("Regardez le plateau pour trouver un anneau de votre equipe (◯ ou ●).");
             
             System.out.print("Entrez la colonne (X) de l'anneau de depart : ");
             int fromX = readInt(scanner);
@@ -96,9 +135,9 @@ public class CUIMain {
             int fromY = readInt(scanner);
             Coordinate from = findCoordinate(state, fromX, fromY);
 
-            System.out.print("Entrez la colonne (X) de la case d'arrivee : ");
+            System.out.print("Entrez la colonne (X) de la case d'arrivée : ");
             int toX = readInt(scanner);
-            System.out.print("Entrez la ligne (Y) de la case d'arrivee : ");
+            System.out.print("Entrez la ligne (Y) de la case d'arrivée : ");
             int toY = readInt(scanner);
             Coordinate to = findCoordinate(state, toX, toY);
 
@@ -119,7 +158,7 @@ public class CUIMain {
         List<Set<Coordinate>> availableLines = state.lines();
         
         while (true) {
-            System.out.println("\n--- Choix de la ligne à supprimer ---");
+            System.out.println("\n--- Choix de la ligne a supprimer ---");
             for (int i = 0; i < availableLines.size(); i++) {
                 System.out.print("Ligne " + (i + 1) + " : ");
                 for (Coordinate c : availableLines.get(i)) {
@@ -129,15 +168,15 @@ public class CUIMain {
                 System.out.println();
             }
 
-            System.out.print("Entrez le NUMERO de la ligne à supprimer : ");
+            System.out.print("Entrez le NUMERO de la ligne a supprimer : ");
             int choice = readInt(scanner);
             if (choice < 1 || choice > availableLines.size()) {
-                System.out.println("Numero de ligne invalide. Réessayez.");
+                System.out.println("Numero de ligne invalide. Reessayez.");
                 continue;
             }
             Set<Coordinate> chosenLine = availableLines.get(choice - 1);
 
-            System.out.println("Choix de l'anneau a retirer du plateau :");
+            System.out.println("Choix de l'anneau à retirer du plateau :");
             System.out.print("Colonne (X) de l'anneau : ");
             int ringX = readInt(scanner);
             System.out.print("Ligne (Y) de l'anneau : ");
@@ -157,10 +196,7 @@ public class CUIMain {
         }
     }
 
-    private static Coordinate findCoordinate(IState state, int displayX, int displayY) {
-        int realX = displayX;
-        int realY = displayY;
-        
+    private static Coordinate findCoordinate(IState state, int realX, int realY) {
         for (Coordinate coord : state.board().keySet()) {
             Point p = coord.to2DCoordinate();
             if (p.x() == realX && p.y() == realY) {

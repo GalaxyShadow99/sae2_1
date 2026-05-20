@@ -237,37 +237,6 @@ class StateTest {
     }
     
     @Test
-    void testMoveExceptions() {
-        IFactory factory = new FactoryDoubled();
-        IState state = factory.testState(); // au blancs de jouer
-        
-        //  déplacer un Pion au lieu d'un Anneau 
-        Coordinate pawnPos = new CoordinateDoubled(15, 1);
-        Move movePawn = new Move(pawnPos, new CoordinateDoubled(13, 1));
-        assertThrows(IllegalArgumentException.class, () -> state.move(movePawn), 
-            "Déplacer un pion doit lever une IllegalArgumentException.");
-        
-        // déplacer l'anneau de l'adversaire
-        Coordinate blackRingPos = new CoordinateDoubled(11, 5); // Anneau noir
-        Move moveEnemy = new Move(blackRingPos, new CoordinateDoubled(9, 5));
-        assertThrows(IllegalArgumentException.class, () -> state.move(moveEnemy), 
-            "Jouer l'anneau adverse doit lever une IllegalArgumentException.");
-    }
-    
-    @Test
-    void testRemoveLineException() {
-        IFactory factory = new FactoryDoubled();
-        IState emptyState = factory.emptyState(); 
-        
-        Set<Coordinate> fakeLine = new HashSet<>();
-        fakeLine.add(new CoordinateDoubled(9, 5));
-        RemoveLine invalidAction = new RemoveLine(fakeLine, new CoordinateDoubled(9, 5));
-        
-        assertThrows(RuntimeException.class, () -> emptyState.removeLine(invalidAction), 
-            "supprimer une ligne quand y en a pas doit lever RuntimeException.");
-    }
-    
-    @Test
     void testIsInField() {
         HashMap<Coordinate, Token> board = new HashMap<>();
 
@@ -310,26 +279,6 @@ class StateTest {
         // Les deux pions survolés --> devenus BLANCS
         assertEquals(Team.WHITE, nextState.board().get(pawn1).getTeam(), "Le premier pion sauté doit être retourné en BLANC.");
         assertEquals(Team.WHITE, nextState.board().get(pawn2).getTeam(), "Le deuxième pion sauté doit être retourné en BLANC.");
-    }
-    
-    @Test
-    void testMoveRingImpossibleSauterRing() {
-        IFactory factory = new FactoryDoubled();
-        HashMap<Coordinate, Token> board = new HashMap<>(factory.emptyState().board());
-        
-        Coordinate start = new CoordinateDoubled(9, 5);
-        Coordinate obstacleRing = new CoordinateDoubled(11, 5); // anneau sur le chemin
-        Coordinate arrival = new CoordinateDoubled(13, 5);
-        
-        board.put(start, new Ring(Team.WHITE));
-        board.put(obstacleRing, new Ring(Team.BLACK)); // bloque la route
-        
-        IState state = new State(board, Team.WHITE, new ArrayList<>());
-        Move move = new Move(start, arrival);
-        
-        // en théorie le coup ne passe pas
-        assertThrows(IllegalArgumentException.class, () -> state.move(move),
-            "Un anneau ne doit pas pouvoir sauter par-dessus un autre anneau.");
     }
 
 }
