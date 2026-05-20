@@ -1,4 +1,4 @@
-package coordinate;
+package iut.gon.coordinate;
 
 public class DifferentAxisException extends Exception{
 

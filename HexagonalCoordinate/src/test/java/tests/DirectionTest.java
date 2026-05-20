@@ -1,5 +1,5 @@
 package tests;
-import coordinate.*;
+import iut.gon.coordinate.Direction;
 
 import static org.junit.jupiter.api.Assertions.*;
 

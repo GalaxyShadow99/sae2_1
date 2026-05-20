@@ -7,7 +7,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import coordinate.*;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.CoordinateCube;
+import iut.gon.coordinate.DifferentAxisException;
+import iut.gon.coordinate.Mode;
+
 import java.security.InvalidParameterException;
 import java.util.List;
 

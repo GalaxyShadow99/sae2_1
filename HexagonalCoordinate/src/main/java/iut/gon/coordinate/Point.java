@@ -1,4 +1,4 @@
-package coordinate;
+package iut.gon.coordinate;
 
 /**
  * Représente une coordonnée 2D immuable (équivalente à une Coordinate Doubled).

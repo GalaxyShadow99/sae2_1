@@ -1,4 +1,4 @@
-package coordinate;
+package iut.gon.coordinate;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
