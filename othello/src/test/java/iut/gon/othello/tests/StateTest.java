@@ -86,7 +86,7 @@ class StateTest {
 
         IState state = factory.testState();
 
-        Coordinate from = new CoordinateDoubled(6, -3);
+        Coordinate from = new CoordinateDoubled(3, 9);
 
         Set<Coordinate> moves = state.availableMoves(from);
 
@@ -94,21 +94,34 @@ class StateTest {
     }
     
     @Test
-    void testMove() throws DifferentAxisException {
+    void testMoveSimple() {
+        // plateau vide généré par la Factory
         IFactory factory = new FactoryDoubled();
-
-        IState state = factory.testState();
-
-        Coordinate from = new CoordinateDoubled(6, 12);
-        Coordinate to   = new CoordinateDoubled(8, 12);
-
+        IState emptyState = factory.emptyState();
+        
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(emptyState.board());
+        // place UN anneau blanc au centre 
+        Coordinate from = new CoordinateDoubled(9, 5);
+        customBoard.put(from, new Ring(Team.WHITE));
+        
+        // on crée l'état (au tour de team WHITE)
+        IState customState = new State(customBoard, Team.WHITE, new ArrayList<>());
+        Coordinate to = new CoordinateDoubled(11, 5);
         Move move = new Move(from, to);
-
+        
         try {
-            IState newState = state.move(move);
-            assertNotNull(newState);
+            IState newState = customState.move(move);
+            
+            assertNotNull(newState, "Le nouvel état généré ne doit pas être null.");
+            assertTrue(newState.board().get(to) instanceof Ring, "Il devrait y avoir un Anneau sur la case d'arrivée.");
+            assertEquals(Team.WHITE, newState.board().get(to).getTeam(), "L'anneau d'arrivée doit être Blanc.");
+            assertTrue(newState.board().get(from) instanceof Pawn, "Un Pion devrait avoir remplacé l'anneau sur la case de départ.");
+            assertEquals(Team.WHITE, newState.board().get(from).getTeam(), "Le Pion laissé derrière doit être de la même couleur (Blanc).");
+            
         } catch (Exception e) {
-            fail("Move ne doit pas lancer d'exception : " + e.getMessage());
+            System.out.println("Echec du test de déplacement via fct Move ");
+            e.printStackTrace();
+            fail("Move doit pas lancer d'exception sur déplacement libre et valide : " + e.getMessage());
         }
     }
     
@@ -151,7 +164,7 @@ class StateTest {
 
         IState state = factory.testState();
 
-        Coordinate coord = new CoordinateDoubled(6, -3);
+        Coordinate coord = new CoordinateDoubled(3, 9);
 
         IState newState = state.removeToken(coord);
 
