@@ -3,6 +3,7 @@ package coordinate;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CoordinateCube extends Coordinate {
     private int q;
@@ -134,4 +135,28 @@ public class CoordinateCube extends Coordinate {
         
         return new Point(x, y);
     }
+
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(q, r, s);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoordinateCube other = (CoordinateCube) obj;
+		return q == other.q && r == other.r && s == other.s;
+	}
+    
+
+
 }

@@ -46,4 +46,11 @@ public abstract class Coordinate {
     public abstract Coordinate S(Mode mode);
     public abstract Coordinate SO(Mode mode);
     public abstract Coordinate SE(Mode mode);
+    
+    // pour tests
+    @Override
+    public abstract boolean equals(Object obj);
+    @Override
+    public abstract int hashCode();
+    
 }

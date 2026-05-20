@@ -3,6 +3,7 @@ package coordinate;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CoordinateDoubled extends Coordinate {
     private int y; 
@@ -113,4 +114,22 @@ public class CoordinateDoubled extends Coordinate {
 	public Point to2DCoordinate() {
 		return new Point(this.x, this.y);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CoordinateDoubled other = (CoordinateDoubled) obj;
+		return x == other.x && y == other.y;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(x, y);
+	}
+	
 }
