@@ -33,25 +33,18 @@ public class Node {
         Team opponent = myTeam.other();
         double currentScore = 0;
         
-        // 1. ANNEAU EN MOINS (+/- 1000)
-        // Dans le jeu, on gagne en retirant ses propres anneaux. 
-        // Moins on a d'anneaux par rapport à l'adversaire, plus on est proche de la victoire.
         int myRings = etat.rings().get(myTeam).size();
         int oppRings = etat.rings().get(opponent).size();
         currentScore += (oppRings - myRings) * 1000;
         
-        // 2. LIGNE DE PIONS (+/- 50)
-        // Vérifie si des lignes sont formées et prêtes à être récupérées ce tour-ci
         if (etat.lines() != null && !etat.lines().isEmpty()) {
             if (etat.turn() == myTeam) {
-                currentScore += 50 * etat.lines().size(); // Avantage immédiat pour nous
+                currentScore += 50 * etat.lines().size();
             } else {
-                currentScore -= 50 * etat.lines().size(); // Menace immédiate de l'adversaire
+                currentScore -= 50 * etat.lines().size();
             }
         }
         
-        // 3. MOBILITÉ (+/- 0.5)
-        // Plus on a de mouvements possibles, plus on contrôle le plateau
         double myMobility = 0;
         for (Coordinate ring : etat.rings().get(myTeam)) {
             myMobility += etat.availableMoves(ring).size();
@@ -63,39 +56,23 @@ public class Node {
         }
         currentScore += (myMobility - oppMobility) * 0.5;
         
-        // Sauvegarde et retourne le score
         this.score = currentScore;
         return currentScore;
     }
 
-    /**
-     * Retourne l'état du jeu de ce nœud.
-     * @return IState état du jeu
-     */
     public IState getEtat() {
         return etat;
     }
 
-    /**
-     * Retourne le nœud parent.
-     * @return Node nœud parent
-     */
     public Node getParent() {
         return parent;
     }
 
-    /**
-     * Retourne l'action menant à ce nœud.
-     * @return Action action précédente
-     */
     public Action getBefore() {
         return before;
     }
     
-    /**
-     * Retourne le score évalué du nœud.
-     * @return double score du nœud
-     */
+ 
     public double getScore() {
         return score;
     }

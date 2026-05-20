@@ -25,9 +25,7 @@ import java.util.Set;
 public class IAMain {
     
     /**
-     * Point d'entrée du jeu avec un joueur humain contre l'IA.
-     * @param args arguments de la ligne de commande (String[])
-     * @throws DifferentAxisException si les coordonnées ne sont pas alignées
+     * Jeu jouable contre l'IA.
      */
     public static void main(String[] args) throws DifferentAxisException {
         
@@ -320,7 +318,7 @@ public class IAMain {
     }
 
     /**
-     * Lit un entier saisi par l'utilisateur avec gestion d'erreur.
+     * Lit un entier saisi par l'utilisateur.
      * @param scanner scanner pour la saisie (Scanner)
      * @return int l'entier saisi
      */

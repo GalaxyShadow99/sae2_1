@@ -22,7 +22,7 @@ import java.util.Set;
 public class CUIMain {
 
     /**
-     * Point d'entrée du jeu en mode console (CUI).
+     * Point d'entrée du jeu.
      * @param args arguments de la ligne de commande (String[])
      */
     public static void main(String[] args) {
