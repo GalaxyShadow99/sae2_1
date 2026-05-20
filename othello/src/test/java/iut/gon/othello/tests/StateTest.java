@@ -92,21 +92,23 @@ class StateTest {
 
         assertNotNull(moves);
     }
+    
     @Test
     void testMove() throws DifferentAxisException {
         IFactory factory = new FactoryDoubled();
 
         IState state = factory.testState();
 
-        Coordinate from = new CoordinateDoubled(4, -2); 
-        Coordinate to = new CoordinateDoubled(6, -2); 
+        Coordinate from = new CoordinateDoubled(6, 12);
+        Coordinate to   = new CoordinateDoubled(8, 12);
 
         Move move = new Move(from, to);
 
         try {
-            state.move(move);
+            IState newState = state.move(move);
+            assertNotNull(newState);
         } catch (Exception e) {
-            fail("Move ne doit pas lancer d'exception. + " + e.getStackTrace());
+            fail("Move ne doit pas lancer d'exception : " + e.getMessage());
         }
     }
     
@@ -190,11 +192,13 @@ class StateTest {
         HashMap<Coordinate, Token> board = new HashMap<>();
 
         Coordinate coord = new CoordinateDoubled(0, 0);
+        Coordinate horsPlat = new CoordinateDoubled(100, 100);
 
         board.put(coord, null);
 
         State state = new State(board, Team.WHITE, new ArrayList<>());
 
-        assertFalse(state.isInField(coord));
+        assertTrue(state.isInField(coord));       
+        assertFalse(state.isInField(horsPlat));     
     }
 }

@@ -44,7 +44,7 @@ public class FactoryDoubled implements IFactory {
                 int xMax = limitesX[y][1];
                 
                 for (int x = xMin; x <= xMax; x += 2) {
-                    terrain.put(new CoordinateDoubled(y, x), null); 
+                    terrain.put(new CoordinateDoubled(x, y), null); 
                 }
             }
             return terrain;    }

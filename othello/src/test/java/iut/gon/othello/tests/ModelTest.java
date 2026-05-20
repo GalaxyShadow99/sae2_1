@@ -62,15 +62,12 @@ class ModelTest {
     @Test
     void testGetTokenAt() {
         IFactory factory = new FactoryDoubled();
-
         Model model = new Model(factory.stateForWhiteLinesTest());
 
-        Coordinate coord = new CoordinateDoubled(6, 3);
-
+        Coordinate coord = new CoordinateDoubled(8, 0); // Pawn BLACK (CoordonnesCommunes)
 
         Token token = model.getTokenAt(coord);
 
-        
         assertNotNull(token);
         assertEquals(Team.BLACK, token.getTeam());
     }
@@ -127,7 +124,7 @@ class ModelTest {
 
         Model model = new Model(factory.testState());
 
-        Coordinate from = new CoordinateDoubled(6, -3);
+        Coordinate from = new CoordinateDoubled(6, 3);
 
         Set<Coordinate> moves = model.movesFrom(from);
 
@@ -137,11 +134,10 @@ class ModelTest {
     @Test
     void testMoveRing() throws DifferentAxisException {
         IFactory factory = new FactoryDoubled();
-
         Model model = new Model(factory.testState());
-        Coordinate from = new CoordinateDoubled(5, 2);
-        Coordinate to = new CoordinateDoubled(2, 0);
 
+        Coordinate from = new CoordinateDoubled(12, 6); // Ring WHITE
+        Coordinate to   = new CoordinateDoubled(14, 6); // case libre, même axe horizontal
 
         try {
             model.moveRing(from, to);
@@ -196,14 +192,13 @@ class ModelTest {
     @Test
     void testRemoveToken() {
         IFactory factory = new FactoryDoubled();
- 
         Model model = new Model(factory.testState());
- 
-        Coordinate coord = new CoordinateDoubled(6, -3);
+
+        Coordinate coord = new CoordinateDoubled(13, 3); // Ring WHITE
         assertNotNull(model.getTokenAt(coord));
- 
+
         model.removeToken(coord);
- 
+
         assertNull(model.getTokenAt(coord));
     }
  
