@@ -29,7 +29,7 @@ public abstract class Coordinate {
 	            Coordinate neighbor = this.toDir(mode, dir);
 	            neighbors.add(neighbor);
 	        } catch (InvalidParameterException e){
-	        	
+	        	System.err.println("Direction invalide");
 	        }
 	    }
 	    
