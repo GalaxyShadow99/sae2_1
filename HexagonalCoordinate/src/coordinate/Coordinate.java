@@ -22,19 +22,31 @@ public abstract class Coordinate {
     }
 
     public List<Coordinate> getNeighbors(Mode mode) {
-	    List<Coordinate> neighbors = new ArrayList<>();
-	    
-	    for (Direction dir : Direction.values()) {
-	        try {
-	            Coordinate neighbor = this.toDir(mode, dir);
-	            neighbors.add(neighbor);
-	        } catch (InvalidParameterException e){
-	        	
-	        }
-	    }
-	    
-	    return neighbors;
-	}
+        List<Coordinate> neighbors = new ArrayList<>();
+        
+        for (Direction dir : Direction.values()) {
+            // 1. En mode POINTY N et S existent pas 
+            if (mode == Mode.POINTY && (dir == Direction.N || dir == Direction.S)) {
+                continue;
+            }
+            
+            // 2. En mode FLAT E et O existent pas 
+            if (mode == Mode.FLAT && (dir == Direction.E || dir == Direction.O)) {
+                continue;
+            }
+
+            try {
+                Coordinate neighbor = this.toDir(mode, dir);
+                if (neighbor != null) {
+                    neighbors.add(neighbor);
+                }
+            } catch (InvalidParameterException e) {
+                throw new InvalidParameterException("Erreur critique : La direction " + dir + " a planté pour le mode " + mode);
+            }
+        }
+        
+        return neighbors;
+    }
 
     public abstract List<Coordinate> between(Mode mode, Coordinate to) throws DifferentAxisException;
 

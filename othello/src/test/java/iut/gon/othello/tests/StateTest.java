@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -86,27 +87,42 @@ class StateTest {
 
         IState state = factory.testState();
 
-        Coordinate from = new CoordinateDoubled(6, -3);
+        Coordinate from = new CoordinateDoubled(3, 9);
 
         Set<Coordinate> moves = state.availableMoves(from);
 
         assertNotNull(moves);
     }
+    
     @Test
-    void testMove() throws DifferentAxisException {
+    void testMoveSimple() {
+        // plateau vide généré par la Factory
         IFactory factory = new FactoryDoubled();
-
-        IState state = factory.testState();
-
-        Coordinate from = new CoordinateDoubled(4, -2); 
-        Coordinate to = new CoordinateDoubled(6, -2); 
-
+        IState emptyState = factory.emptyState();
+        
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(emptyState.board());
+        // place UN anneau blanc au centre 
+        Coordinate from = new CoordinateDoubled(9, 5);
+        customBoard.put(from, new Ring(Team.WHITE));
+        
+        // on crée l'état (au tour de team WHITE)
+        IState customState = new State(customBoard, Team.WHITE, new ArrayList<>());
+        Coordinate to = new CoordinateDoubled(11, 5);
         Move move = new Move(from, to);
-
+        
         try {
-            state.move(move);
+            IState newState = customState.move(move);
+            
+            assertNotNull(newState, "Le nouvel état généré ne doit pas être null.");
+            assertTrue(newState.board().get(to) instanceof Ring, "Il devrait y avoir un Anneau sur la case d'arrivée.");
+            assertEquals(Team.WHITE, newState.board().get(to).getTeam(), "L'anneau d'arrivée doit être Blanc.");
+            assertTrue(newState.board().get(from) instanceof Pawn, "Un Pion devrait avoir remplacé l'anneau sur la case de départ.");
+            assertEquals(Team.WHITE, newState.board().get(from).getTeam(), "Le Pion laissé derrière doit être de la même couleur (Blanc).");
+            
         } catch (Exception e) {
-            fail("Move ne doit pas lancer d'exception. + " + e.getStackTrace());
+            System.out.println("Echec du test de déplacement via fct Move ");
+            e.printStackTrace();
+            fail("Move doit pas lancer d'exception sur déplacement libre et valide : " + e.getMessage());
         }
     }
     
@@ -149,7 +165,7 @@ class StateTest {
 
         IState state = factory.testState();
 
-        Coordinate coord = new CoordinateDoubled(6, -3);
+        Coordinate coord = new CoordinateDoubled(3, 9);
 
         IState newState = state.removeToken(coord);
 
@@ -186,15 +202,83 @@ class StateTest {
     }
 
     @Test
+    void testWinnerBlackWins() {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(factory.emptyState().board());
+        
+        customBoard.put(new CoordinateDoubled(11, 5), new Ring(Team.WHITE));
+        customBoard.put(new CoordinateDoubled(13, 5), new Ring(Team.WHITE));
+        customBoard.put(new CoordinateDoubled(15, 5), new Ring(Team.WHITE));
+        
+        customBoard.put(new CoordinateDoubled(9, 5), new Ring(Team.BLACK));
+        customBoard.put(new CoordinateDoubled(7, 5), new Ring(Team.BLACK));
+        
+        IState state = new State(customBoard, Team.WHITE, new ArrayList<>());
+        
+        assertEquals(Team.BLACK, state.winner(), "Equipe Noire n'a plus que 2 anneaux, doivent être déclarés gagnants !");
+    }
+
+    @Test
+    void testAvailableMovesLogic() {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(factory.emptyState().board());
+        
+        Coordinate center = new CoordinateDoubled(9, 5);
+        customBoard.put(center, new Ring(Team.WHITE));
+        IState state = new State(customBoard, Team.WHITE, new ArrayList<>());
+        
+        Set<Coordinate> moves = state.availableMoves(center);
+        
+        assertFalse(moves.isEmpty(), "plateau vide donc pas de mvt possibles");
+        assertFalse(moves.contains(center), "anneau peut pas faire de sur place");
+        
+        Coordinate eastMove = new CoordinateDoubled(11, 5);
+        assertTrue(moves.contains(eastMove), "case à l'EST doit etre dans la liste des coups possibles");
+    }
+    
+    @Test
+    void testMoveExceptions() {
+        IFactory factory = new FactoryDoubled();
+        IState state = factory.testState(); // au blancs de jouer
+        
+        //  déplacer un Pion au lieu d'un Anneau 
+        Coordinate pawnPos = new CoordinateDoubled(15, 1);
+        Move movePawn = new Move(pawnPos, new CoordinateDoubled(13, 1));
+        assertThrows(IllegalArgumentException.class, () -> state.move(movePawn), 
+            "Déplacer un pion doit lever une IllegalArgumentException.");
+        
+        // déplacer l'anneau de l'adversaire
+        Coordinate blackRingPos = new CoordinateDoubled(11, 5); // Anneau noir
+        Move moveEnemy = new Move(blackRingPos, new CoordinateDoubled(9, 5));
+        assertThrows(IllegalArgumentException.class, () -> state.move(moveEnemy), 
+            "Jouer l'anneau adverse doit lever une IllegalArgumentException.");
+    }
+    
+    @Test
+    void testRemoveLineException() {
+        IFactory factory = new FactoryDoubled();
+        IState emptyState = factory.emptyState(); 
+        
+        Set<Coordinate> fakeLine = new HashSet<>();
+        fakeLine.add(new CoordinateDoubled(9, 5));
+        RemoveLine invalidAction = new RemoveLine(fakeLine, new CoordinateDoubled(9, 5));
+        
+        assertThrows(RuntimeException.class, () -> emptyState.removeLine(invalidAction), 
+            "supprimer une ligne quand y en a pas doit lever RuntimeException.");
+    }
+    
+    @Test
     void testIsInField() {
         HashMap<Coordinate, Token> board = new HashMap<>();
 
         Coordinate coord = new CoordinateDoubled(0, 0);
+        Coordinate horsPlat = new CoordinateDoubled(100, 100);
 
         board.put(coord, null);
 
         State state = new State(board, Team.WHITE, new ArrayList<>());
 
-        assertFalse(state.isInField(coord));
+        assertTrue(state.isInField(coord));       
+        assertFalse(state.isInField(horsPlat));     
     }
 }

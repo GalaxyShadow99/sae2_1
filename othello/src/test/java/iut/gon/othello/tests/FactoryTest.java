@@ -22,7 +22,7 @@ class FactoryTest {
 
 	//TESTS DE FACTORY DOUBLE
 
-    @Test
+	@Test
     void testEmptyStateDoubled() {
         IFactory factory = new FactoryDoubled();
 
@@ -36,12 +36,12 @@ class FactoryTest {
         assertNotNull(board);
         assertFalse(board.isEmpty());
 
-        Coordinate coord = new CoordinateDoubled(0, 0);
+        Coordinate coord = new CoordinateDoubled(5, 9);
         assertTrue(board.containsKey(coord));
         assertNull(board.get(coord));
     }
-
-    @Test
+	
+	@Test
     void testTestStateDoubled() {
         IFactory factory = new FactoryDoubled();
 
@@ -49,18 +49,19 @@ class FactoryTest {
 
         Map<Coordinate, Token> board = state.board();
 
-        Coordinate whitePawn = new CoordinateDoubled(6, -3);
+        Coordinate whitePawn = new CoordinateDoubled(1, 15);
         assertTrue(board.get(whitePawn) instanceof Pawn);
         assertEquals(Team.WHITE, board.get(whitePawn).getTeam());
 
-        Coordinate blackPawn = new CoordinateDoubled(4, -2);
+        Coordinate blackPawn = new CoordinateDoubled(1, 11);
         assertTrue(board.get(blackPawn) instanceof Pawn);
         assertEquals(Team.BLACK, board.get(blackPawn).getTeam());
 
-        Coordinate whiteRing = new CoordinateDoubled(4, -2);
+        Coordinate whiteRing = new CoordinateDoubled(3, 13);
         assertNotNull(board.get(whiteRing));
+        assertTrue(board.get(whiteRing) instanceof Ring);
+        assertEquals(Team.WHITE, board.get(whiteRing).getTeam());
     }
-
     @Test
     void testStateForBlackLinesTestDoubled() {
         IFactory factory = new FactoryDoubled();
@@ -69,7 +70,7 @@ class FactoryTest {
 
         Map<Coordinate, Token> board = state.board();
 
-        Coordinate coord = new CoordinateDoubled(-11, -1);
+        Coordinate coord = new CoordinateDoubled(4, 2);
 
         assertTrue(board.get(coord) instanceof Pawn);
         assertEquals(Team.BLACK, board.get(coord).getTeam());
@@ -83,12 +84,11 @@ class FactoryTest {
 
         Map<Coordinate, Token> board = state.board();
 
-        Coordinate coord = new CoordinateDoubled(0, 0);
+        Coordinate coord = new CoordinateDoubled(5, 9);
 
         assertTrue(board.get(coord) instanceof Pawn);
         assertEquals(Team.BLACK, board.get(coord).getTeam());
     }
-
     @Test
     void testDoubleLineStateTestDoubled() {
         IFactory factory = new FactoryDoubled();
@@ -97,11 +97,11 @@ class FactoryTest {
 
         Map<Coordinate, Token> board = state.board();
 
-        Coordinate whitePawn = new CoordinateDoubled(0, -1);
+        Coordinate whitePawn = new CoordinateDoubled(4, 6);
         assertTrue(board.get(whitePawn) instanceof Pawn);
         assertEquals(Team.WHITE, board.get(whitePawn).getTeam());
 
-        Coordinate blackRing = new CoordinateDoubled(-7, -1);
+        Coordinate blackRing = new CoordinateDoubled(3, 3);
         assertTrue(board.get(blackRing) instanceof Ring);
         assertEquals(Team.BLACK, board.get(blackRing).getTeam());
     }

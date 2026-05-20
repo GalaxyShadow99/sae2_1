@@ -2,6 +2,8 @@ package iut.gon.othello.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +19,9 @@ import iut.gon.othello.model.Team;
 import iut.gon.othello.model.factory.FactoryDoubled;
 import iut.gon.othello.model.factory.IFactory;
 import iut.gon.othello.model.state.IState;
+import iut.gon.othello.model.state.State;
+import iut.gon.othello.model.tokens.Pawn;
+import iut.gon.othello.model.tokens.Ring;
 import iut.gon.othello.model.tokens.Token;
 
 class ModelTest {
@@ -61,14 +66,12 @@ class ModelTest {
     @Test
     void testGetTokenAt() {
         IFactory factory = new FactoryDoubled();
-
         Model model = new Model(factory.stateForWhiteLinesTest());
 
-        Coordinate coord = new CoordinateDoubled(0, 0);
+        Coordinate coord = new CoordinateDoubled(0, 8); // Pawn BLACK (CoordonnesCommunes)
 
         Token token = model.getTokenAt(coord);
 
-        
         assertNotNull(token);
         assertEquals(Team.BLACK, token.getTeam());
     }
@@ -79,7 +82,7 @@ class ModelTest {
 
         Model model = new Model(factory.emptyState());
 
-        Coordinate valid = new CoordinateDoubled(0, 0);
+        Coordinate valid = new CoordinateDoubled(9, 5);
         Coordinate invalid = new CoordinateDoubled(100, 100);
 
         assertTrue(model.isInField(valid));
@@ -125,7 +128,7 @@ class ModelTest {
 
         Model model = new Model(factory.testState());
 
-        Coordinate from = new CoordinateDoubled(6, -3);
+        Coordinate from = new CoordinateDoubled(6, 3);
 
         Set<Coordinate> moves = model.movesFrom(from);
 
@@ -133,22 +136,37 @@ class ModelTest {
     }
 
     @Test
-    void testMoveRing() throws DifferentAxisException {
+    void testMoveRingSimple() {
         IFactory factory = new FactoryDoubled();
-
-        Model model = new Model(factory.testState());
-
-        Coordinate from = new CoordinateDoubled(3, -4);
-        Coordinate to = new CoordinateDoubled(5, 9);
-
+        IState emptyState = factory.emptyState();
+        
+        HashMap<Coordinate, Token> customBoard = new HashMap<>(emptyState.board());    
+        Coordinate startPos = new CoordinateDoubled(9, 5);
+        customBoard.put(startPos, new Ring(Team.WHITE));
+        IState customState = new State(customBoard, Team.WHITE, new ArrayList<>());
+        Model model = new Model(customState);
+        Coordinate endPos = new CoordinateDoubled(11, 5);
+        
         try {
-            model.moveRing(from, to);
+            model.moveRing(startPos, endPos);
+            
+            IState newState = model.getCurrentState();
+            assertTrue(newState.board().get(endPos) instanceof Ring, 
+                       "devrait y avoir Anneau sur case d'arrivée.");
+            assertEquals(Team.WHITE, newState.board().get(endPos).getTeam(), 
+                         "anneau d'arrivée doit être Blanc.");
+            assertTrue(newState.board().get(startPos) instanceof Pawn, 
+                       "Pion devrait avoir remplacé l'anneau sur case départ.");
+            assertEquals(Team.WHITE, newState.board().get(startPos).getTeam(), 
+                         "Pion laissé derrière --> doit être Blanc.");
         } catch (Exception e) {
-            fail("Le déplacement ne devrait pas lancer d'exception.");
+            System.out.println("Echec déplacement  : " + e.getMessage());
+            e.printStackTrace(); 
+            fail("déplacement sur un plateau complètement vide ne devrait pas fail");
         }
     }
 
-    @Test
+        @Test
     void testRemoveLine() {
         IFactory factory = new FactoryDoubled();
 
@@ -190,4 +208,38 @@ class ModelTest {
 
         assertEquals(state, model.getCurrentState());
     }
+    
+    @Test
+    void testRemoveToken() {
+        IFactory factory = new FactoryDoubled();
+        Model model = new Model(factory.testState());
+
+        Coordinate coord = new CoordinateDoubled(3, 13); // Ring WHITE
+        assertNotNull(model.getTokenAt(coord));
+
+        model.removeToken(coord);
+        assertNull(model.getTokenAt(coord));
+    }
+ 
+    
+    @Test
+    void testToggleToken() {
+        IFactory factory = new FactoryDoubled();
+ 
+        Model model = new Model(factory.emptyState());
+ 
+        Coordinate coord = new CoordinateDoubled(0, 0);
+ 
+        assertNull(model.getTokenAt(coord));
+ 
+        model.toggleToken(coord, Team.WHITE, Ring.class);
+        Token token = model.getTokenAt(coord);
+        assertNotNull(token);
+        assertInstanceOf(Ring.class, token);
+        assertEquals(Team.WHITE, token.getTeam());
+ 
+        model.toggleToken(coord, Team.WHITE, Ring.class);
+        assertNull(model.getTokenAt(coord));
+    }
+
 }
