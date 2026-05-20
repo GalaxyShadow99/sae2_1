@@ -1,7 +1,7 @@
 package iut.gon.othello.IA;
 import java.util.List;
 
-import coordinate.Coordinate;
+import iut.gon.coordinate.Coordinate;
 import iut.gon.othello.model.actions.Action;
 
 

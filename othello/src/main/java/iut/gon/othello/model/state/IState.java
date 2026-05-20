@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import coordinate.Coordinate;
-import coordinate.DifferentAxisException;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.DifferentAxisException;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;

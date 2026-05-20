@@ -1,6 +1,6 @@
 package iut.gon.othello.model.actions;
 
-import coordinate.Coordinate;
+import iut.gon.coordinate.Coordinate;
 
 public class Move extends Action{
 	private Coordinate from;

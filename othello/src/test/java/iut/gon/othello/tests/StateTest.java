@@ -11,11 +11,9 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import coordinate.Coordinate;
-import coordinate.CoordinateCube;
-import coordinate.CoordinateDoubled;
-import coordinate.DifferentAxisException;
-import iut.gon.othello.model.Model;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.CoordinateDoubled;
+import iut.gon.coordinate.DifferentAxisException;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;

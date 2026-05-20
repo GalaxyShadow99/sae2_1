@@ -1,6 +1,7 @@
 package iut.gon.othello.model;
 
-import javafx.scene.paint.Color;
+import java.awt.Color;
+import java.text.Collator;
 
 public enum Team {
 	BLACK(Color.BLACK),

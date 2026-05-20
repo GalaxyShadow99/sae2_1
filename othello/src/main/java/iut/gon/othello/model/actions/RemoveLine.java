@@ -1,7 +1,7 @@
 package iut.gon.othello.model.actions;
 import java.util.Set;
 
-import coordinate.Coordinate;
+import iut.gon.coordinate.Coordinate;
 
 public class RemoveLine extends Action {
 	private Set<Coordinate> line;

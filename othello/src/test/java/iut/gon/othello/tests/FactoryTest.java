@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import coordinate.Coordinate;
-import coordinate.CoordinateCube;
-import coordinate.CoordinateDoubled;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.CoordinateCube;
+import iut.gon.coordinate.CoordinateDoubled;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.factory.FactoryCube;
 import iut.gon.othello.model.factory.FactoryDoubled;

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import coordinate.Coordinate;
-import coordinate.DifferentAxisException;
-import coordinate.Mode;
-
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.DifferentAxisException;
+import iut.gon.coordinate.Direction;
+import iut.gon.coordinate.Mode;
 import iut.gon.othello.model.Team;
 
 import iut.gon.othello.model.actions.Move;
@@ -128,13 +128,13 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 	public Set<Coordinate> availableMoves(Coordinate from) throws java.security.InvalidParameterException {
 		Set<Coordinate> moves = new HashSet<>();
 
-		for (coordinate.Direction dir : coordinate.Direction.values()) {
+		for (Direction dir : Direction.values()) {
 			Coordinate current = from;
 			boolean jumpedPawn = false;
 
 			while (true) {
 				try {
-					current = current.toDir(coordinate.Mode.POINTY, dir);
+					current = current.toDir(Mode.POINTY, dir);
 				} catch (InvalidParameterException e) {
 					break;
 				}
@@ -172,7 +172,7 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 
 			Team teamToMatch = startToken.getTeam();
 
-			for (coordinate.Direction dir : coordinate.Direction.values()) {
+			for (Direction dir : Direction.values()) {
 				Set<Coordinate> currentLine = new HashSet<>();
 				currentLine.add(startCoord);
 
@@ -181,7 +181,7 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 
 				for (int i = 0; i < 4; i++) {
 					try {
-						current = current.toDir(coordinate.Mode.POINTY, dir);
+						current = current.toDir(Mode.POINTY, dir);
 
 						if (!boardToScan.containsKey(current)) {
 							isValidLine = false;

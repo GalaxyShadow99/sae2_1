@@ -16,16 +16,6 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-controls</artifactId>
-			<version>21.0.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-fxml</artifactId>
-			<version>21.0.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
 			<version>5.10.2</version>
@@ -45,21 +35,6 @@
 				<configuration>
 					<release>22</release>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<version>0.0.6</version>
-				<executions>
-					<execution>
-						<!-- Default configuration for running -->
-						<!-- Usage: mvn clean javafx:run -->
-						<id>default-cli</id>
-						<configuration>
-							<mainClass>iut.gon.othello.App</mainClass>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

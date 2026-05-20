@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.List;
 
-import coordinate.Coordinate;
-import coordinate.CoordinateCube;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.CoordinateCube;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.state.IState;
 import iut.gon.othello.model.state.State;

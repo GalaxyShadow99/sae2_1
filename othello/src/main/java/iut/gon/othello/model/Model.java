@@ -1,7 +1,7 @@
 package iut.gon.othello.model;
 
-import coordinate.Coordinate;
-import coordinate.DifferentAxisException;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.DifferentAxisException;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 import iut.gon.othello.model.state.IState;

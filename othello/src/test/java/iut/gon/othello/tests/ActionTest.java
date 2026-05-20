@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import coordinate.Coordinate;
-import coordinate.CoordinateDoubled;
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.CoordinateDoubled;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
 

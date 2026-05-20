@@ -1,5 +1,7 @@
 package iut.gon.othello;
 
+import iut.gon.coordinate.Coordinate;
+import iut.gon.coordinate.Point;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
@@ -10,9 +12,6 @@ import iut.gon.othello.model.tokens.Token;
 
 import iut.gon.othello.model.factory.FactoryDoubled;
 import iut.gon.othello.model.factory.IFactory; 
-
-import coordinate.Coordinate;
-import coordinate.Point;
 
 import java.util.ArrayList;
 import java.util.List;
