@@ -12,8 +12,10 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import coordinate.Coordinate;
+import coordinate.CoordinateCube;
 import coordinate.CoordinateDoubled;
 import coordinate.DifferentAxisException;
+import iut.gon.othello.model.Model;
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
 import iut.gon.othello.model.actions.RemoveLine;
@@ -281,4 +283,55 @@ class StateTest {
         assertTrue(state.isInField(coord));       
         assertFalse(state.isInField(horsPlat));     
     }
+    
+    ///////// SCENARIOS DE JEU A TESTER 
+    
+    @Test
+    void testMoveRingSautEtRetournement() throws DifferentAxisException {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> board = new HashMap<>(factory.emptyState().board());
+        
+        // Un anneau blanc, suivi de deux pions NOIRS 
+        Coordinate start = new CoordinateDoubled(9, 5);
+        Coordinate pawn1 = new CoordinateDoubled(11, 5);
+        Coordinate pawn2 = new CoordinateDoubled(13, 5);
+        Coordinate arrival = new CoordinateDoubled(15, 5); // Case libre après
+        
+        board.put(start, new Ring(Team.WHITE));
+        board.put(pawn1, new Pawn(Team.BLACK));
+        board.put(pawn2, new Pawn(Team.BLACK));
+        
+        IState state = new State(board, Team.WHITE, new ArrayList<>());
+        Move move = new Move(start, arrival);
+        
+        IState nextState = state.move(move);
+        
+        assertTrue(nextState.board().get(arrival) instanceof Ring, "L'anneau doit avoir sauté en (15,5).");
+        assertTrue(nextState.board().get(start) instanceof Pawn, "La case de départ (9,5) reçoit un pion blanc.");
+        
+        // Les deux pions survolés --> devenus BLANCS
+        assertEquals(Team.WHITE, nextState.board().get(pawn1).getTeam(), "Le premier pion sauté doit être retourné en BLANC.");
+        assertEquals(Team.WHITE, nextState.board().get(pawn2).getTeam(), "Le deuxième pion sauté doit être retourné en BLANC.");
+    }
+    
+    @Test
+    void testMoveRingImpossibleSauterRing() {
+        IFactory factory = new FactoryDoubled();
+        HashMap<Coordinate, Token> board = new HashMap<>(factory.emptyState().board());
+        
+        Coordinate start = new CoordinateDoubled(9, 5);
+        Coordinate obstacleRing = new CoordinateDoubled(11, 5); // anneau sur le chemin
+        Coordinate arrival = new CoordinateDoubled(13, 5);
+        
+        board.put(start, new Ring(Team.WHITE));
+        board.put(obstacleRing, new Ring(Team.BLACK)); // bloque la route
+        
+        IState state = new State(board, Team.WHITE, new ArrayList<>());
+        Move move = new Move(start, arrival);
+        
+        // en théorie le coup ne passe pas
+        assertThrows(IllegalArgumentException.class, () -> state.move(move),
+            "Un anneau ne doit pas pouvoir sauter par-dessus un autre anneau.");
+    }
+
 }
