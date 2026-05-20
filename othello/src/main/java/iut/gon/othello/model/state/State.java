@@ -1,5 +1,6 @@
 package iut.gon.othello.model.state;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,7 +80,7 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		newBoard.put(to, token);
 		newBoard.put(from, new Pawn(this.turn));
 
-		List<Coordinate> path = from.between(Mode.FLAT, to);
+		List<Coordinate> path = from.between(Mode.POINTY, to);
 		for (Coordinate c : path) {
 			Token t = newBoard.get(c);
 			if (t instanceof Pawn) {
@@ -134,7 +135,7 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 			while (true) {
 				try {
 					current = current.toDir(coordinate.Mode.POINTY, dir);
-				} catch (IllegalArgumentException e) {
+				} catch (InvalidParameterException e) {
 					break;
 				}
 
@@ -165,8 +166,8 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		for (Coordinate startCoord : boardToScan.keySet()) {
 			Token startToken = boardToScan.get(startCoord);
 
-			if (startToken == null || !(startToken.getClass().getSimpleName().equals("Pawn"))) {
-				continue;
+			if (startToken == null || !(startToken instanceof Pawn)) {
+			    continue;
 			}
 
 			Team teamToMatch = startToken.getTeam();
@@ -188,8 +189,7 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 						}
 
 						Token nextToken = boardToScan.get(current);
-						if (nextToken == null || !(nextToken.getClass().getSimpleName().equals("Pawn"))
-								|| nextToken.getTeam() != teamToMatch) {
+						if (nextToken == null || !(nextToken instanceof Pawn) || nextToken.getTeam() != teamToMatch) {
 							isValidLine = false;
 							break;
 						}
@@ -247,7 +247,6 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 
 	@Override
 	public boolean isInField(Coordinate coordinate) {
-		// TODO Auto-generated method stub
-		return false;
+	    return this.board != null && this.board.containsKey(coordinate);
 	}
 }
