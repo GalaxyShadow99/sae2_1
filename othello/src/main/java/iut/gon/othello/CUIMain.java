@@ -21,6 +21,10 @@ import java.util.Set;
 
 public class CUIMain {
 
+    /**
+     * Point d'entrée du jeu en mode console (CUI).
+     * @param args arguments de la ligne de commande (String[])
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
@@ -64,6 +68,11 @@ public class CUIMain {
         System.out.println("=== FIN DE LA PARTIE ===");
     }
 
+    /**
+     * Place aléatoirement 5 anneaux par équipe sur le plateau.
+     * @param state état initial vide (IState)
+     * @return IState état avec les anneaux placés
+     */
     private static IState initializeRandomRings(IState state) {
         List<Coordinate> availableCoordinates = new ArrayList<>(state.board().keySet());
         java.util.Collections.shuffle(availableCoordinates); 
@@ -85,6 +94,12 @@ public class CUIMain {
         return state;
     }
 
+    /**
+     * Gère le déplacement d'un anneau saisi par le joueur.
+     * @param state état actuel du jeu (IState)
+     * @param scanner scanner pour la saisie utilisateur (Scanner)
+     * @return IState nouvel état après le déplacement
+     */
     private static IState handlePlayerMove(IState state, Scanner scanner) {
         while (true) {
             System.out.println("\n--- Deplacement d'un anneau ---");
@@ -115,6 +130,12 @@ public class CUIMain {
         }
     }
 
+    /**
+     * Gère la suppression d'une ligne de pions choisie par le joueur.
+     * @param state état actuel du jeu (IState)
+     * @param scanner scanner pour la saisie utilisateur (Scanner)
+     * @return IState nouvel état après suppression
+     */
     private static IState handleRemoveLine(IState state, Scanner scanner) {
         List<Set<Coordinate>> availableLines = state.lines();
         
@@ -157,6 +178,13 @@ public class CUIMain {
         }
     }
 
+    /**
+     * Recherche une coordonnée sur le plateau à partir de coordonnées d'affichage.
+     * @param state état du jeu (IState)
+     * @param displayX coordonnée X d'affichage (int)
+     * @param displayY coordonnée Y d'affichage (int)
+     * @return Coordinate coordonnée trouvée, ou null si absente
+     */
     private static Coordinate findCoordinate(IState state, int displayX, int displayY) {
         int realX = displayX;
         int realY = displayY;
@@ -170,6 +198,10 @@ public class CUIMain {
         return null;
     }
 
+    /**
+     * Affiche le plateau de jeu dans la console.
+     * @param state état du jeu à afficher (IState)
+     */
     private static void displayBoard(IState state) {
         if (state.board().isEmpty()) {
             System.out.println("[Plateau de jeu vide]");
@@ -238,6 +270,11 @@ public class CUIMain {
         System.out.println("======================================================================");
     }
 
+    /**
+     * Retourne le caractère représentant un token pour l'affichage.
+     * @param token token à représenter (Token)
+     * @return char caractère du token
+     */
     private static char getTokenChar(Token token) {
         if (token == null) return '•';
         if (token instanceof Ring) return token.getTeam() == Team.WHITE ? '◯' : '●';
@@ -245,6 +282,11 @@ public class CUIMain {
         return '?';
     }
 
+    /**
+     * Lit un entier saisi par l'utilisateur avec gestion d'erreur.
+     * @param scanner scanner pour la saisie (Scanner)
+     * @return int l'entier saisi
+     */
     private static int readInt(Scanner scanner) {
         while (true) {
             try {

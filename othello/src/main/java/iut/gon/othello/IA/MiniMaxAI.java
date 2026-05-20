@@ -15,11 +15,22 @@ public class MiniMaxAI implements AI {
     private int depthMax;
     private Team myTeam;
     
+    /**
+     * Crée une IA utilisant l'algorithme Minimax avec élagage alpha-bêta.
+     * @param depthMax profondeur maximale de recherche (int)
+     * @param state état initial du jeu (IState)
+     * @param myTeam équipe contrôlée par l'IA (Team)
+     */
     public MiniMaxAI(int depthMax, IState state, Team myTeam) {
         this.depthMax = depthMax;
         this.myTeam = myTeam;
     }
 
+    /**
+     * Choisit la meilleure action en évaluant chaque coup possible avec Minimax.
+     * @param state état actuel du jeu (IState)
+     * @return Action la meilleure action trouvée
+     */
     @Override
     public Action chooseMove(IState state) {
         List<Action> actions = getMoves(state);
@@ -44,6 +55,15 @@ public class MiniMaxAI implements AI {
         return bestAction;
     }
     
+    /**
+     * Algorithme Minimax avec élagage alpha-bêta pour évaluer les coups.
+     * @param n nœud courant (Node)
+     * @param depth profondeur restante (int)
+     * @param currentTeam équipe dont c'est le tour (Team)
+     * @param alpha valeur alpha pour l'élagage (double)
+     * @param beta valeur bêta pour l'élagage (double)
+     * @return double meilleur score estimé
+     */
     public double minimax(Node n, int depth, Team currentTeam, double alpha, double beta) {
         if (depth == 0 || n.getEtat().winner() != null) {
             return n.evaluate(myTeam); 
@@ -93,6 +113,11 @@ public class MiniMaxAI implements AI {
         return state;
     }
     
+    /**
+     * Génère la liste de toutes les actions possibles depuis un état.
+     * @param state état actuel du jeu (IState)
+     * @return List<Action> liste des actions possibles
+     */
     public List<Action> getMoves(IState state) {
         List<Action> actions = new ArrayList<>();
         

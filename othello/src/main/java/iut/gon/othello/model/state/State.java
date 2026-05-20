@@ -21,6 +21,12 @@ import iut.gon.othello.model.tokens.Token;
 import iut.gon.othello.model.tokens.Pawn;
 import iut.gon.othello.model.tokens.Ring;
 
+/**
+ * Enregistrement représentant l'état du jeu.
+ * @param board le plateau de jeu (HashMap<Coordinate, Token>)
+ * @param turn l'équipe dont c'est le tour (Team)
+ * @param lines les lignes de 5 pions détectées (List<Set<Coordinate>>)
+ */
 public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordinate>> lines) implements IState {
 
 	@Override
@@ -38,6 +44,10 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return ringsMap;
 	}
 
+	/**
+	 * Détermine le gagnant : une équipe gagne si elle a 2 anneaux ou moins.
+	 * @return Team l'équipe gagnante, ou null si la partie continue
+	 */
 	@Override
 	public Team winner() {
 		Map<Team, List<Coordinate>> currentRings = this.rings();
@@ -52,6 +62,12 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return null;
 	}
 
+	/**
+	 * Déplace un anneau, retourne les pions traversés et détecte les lignes.
+	 * @param move le déplacement à effectuer (Move)
+	 * @return IState le nouvel état après le déplacement
+	 * @throws DifferentAxisException si from et to ne sont pas sur le même axe
+	 */
 	@Override
 	public IState move(Move move) throws DifferentAxisException {
 		if (this.lines != null && !this.lines.isEmpty()) {
@@ -95,6 +111,11 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return new State(newBoard, nextTurn, newLines);
 	}
 
+	/**
+	 * Supprime une ligne de pions et l'anneau associé du plateau.
+	 * @param removeLine contient la ligne et l'anneau à supprimer (RemoveLine)
+	 * @return IState le nouvel état après suppression
+	 */
 	@Override
 	public IState removeLine(RemoveLine removeLine) {
 		if (this.lines == null || this.lines.isEmpty()) {
@@ -124,6 +145,11 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return new State(newBoard, nextTurn, remainingLines);
 	}
 
+	/**
+	 * Calcule l'ensemble des déplacements possibles depuis un anneau.
+	 * @param from coordonnée de départ de l'anneau (Coordinate)
+	 * @return Set<Coordinate> les positions accessibles
+	 */
 	@Override
 	public Set<Coordinate> availableMoves(Coordinate from) throws java.security.InvalidParameterException {
 		Set<Coordinate> moves = new HashSet<>();
@@ -159,6 +185,11 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return moves;
 	}
 
+	/**
+	 * Parcourt le plateau et détecte toutes les lignes de 5 pions alignés.
+	 * @param boardToScan le plateau à analyser (Map<Coordinate, Token>)
+	 * @return List<Set<Coordinate>> les lignes de 5 pions trouvées
+	 */
 	@Override
 	public List<Set<Coordinate>> getPawnsLines(Map<Coordinate, Token> boardToScan) throws java.security.InvalidParameterException {
 		Set<Set<Coordinate>> uniqueLines = new HashSet<>();
@@ -211,6 +242,11 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return new ArrayList<>(uniqueLines);
 	}
 
+	/**
+	 * Retire le token à la coordonnée spécifiée.
+	 * @param c coordonnée du token à retirer (Coordinate)
+	 * @return IState le nouvel état sans le token
+	 */
 	@Override
 	public IState removeToken(Coordinate c) {
 		HashMap<Coordinate, Token> newBoard = new HashMap<>(this.board);
@@ -222,6 +258,13 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return new State(newBoard, this.turn, this.lines);
 	}
 
+	/**
+	 * Ajoute ou retire un token à une position donnée.
+	 * @param position coordonnée ciblée (Coordinate)
+	 * @param team équipe propriétaire (Team)
+	 * @param tokenClass classe du token (Class<?>)
+	 * @return IState le nouvel état modifié
+	 */
 	@Override
 	public IState toggleToken(Coordinate position, Team team, Class<?> tokenClass) {
 		HashMap<Coordinate, Token> newBoard = new HashMap<>(this.board);
@@ -245,6 +288,11 @@ public record State(HashMap<Coordinate, Token> board, Team turn, List<Set<Coordi
 		return new State(newBoard, this.turn, this.lines);
 	}
 
+	/**
+	 * Vérifie si une coordonnée appartient au plateau de jeu.
+	 * @param coordinate coordonnée à vérifier (Coordinate)
+	 * @return boolean true si la coordonnée est dans le champ
+	 */
 	@Override
 	public boolean isInField(Coordinate coordinate) {
 	    return this.board != null && this.board.containsKey(coordinate);

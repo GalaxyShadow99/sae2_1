@@ -22,6 +22,11 @@ import java.util.Map;
 
 public class AIVsAIMain {
     
+    /**
+     * Point d'entrée du jeu avec deux IA s'affrontant.
+     * @param args arguments de la ligne de commande (String[])
+     * @throws DifferentAxisException si les coordonnées ne sont pas alignées
+     */
     public static void main(String[] args) throws DifferentAxisException {
         
         System.out.println("=== BIENVENUE DANS OTHELLO HEXAGONAL ===");
@@ -92,6 +97,11 @@ public class AIVsAIMain {
         System.out.println("=== FIN DE LA PARTIE ===");
     }
 
+    /**
+     * Place aléatoirement 5 anneaux par équipe sur le plateau.
+     * @param state état initial vide (IState)
+     * @return IState état avec les anneaux placés
+     */
     private static IState initializeRandomRings(IState state) {
         List<Coordinate> availableCoordinates = new ArrayList<>(state.board().keySet());
         java.util.Collections.shuffle(availableCoordinates); 
@@ -113,6 +123,10 @@ public class AIVsAIMain {
         return state;
     }
 
+    /**
+     * Affiche le plateau de jeu dans la console.
+     * @param state état du jeu à afficher (IState)
+     */
     private static void displayBoard(IState state) {
         if (state.board().isEmpty()) {
             System.out.println("[Plateau de jeu vide]");
@@ -181,6 +195,11 @@ public class AIVsAIMain {
         System.out.println("======================================================================");
     }
 
+    /**
+     * Retourne le caractère représentant un token pour l'affichage.
+     * @param token token à représenter (Token)
+     * @return char caractère du token
+     */
     private static char getTokenChar(Token token) {
         if (token == null) return '•';
         if (token instanceof Ring) return token.getTeam() == Team.WHITE ? '◯' : '●';

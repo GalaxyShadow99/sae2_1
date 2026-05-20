@@ -17,6 +17,10 @@ public enum Team {
 		return this.color;
 	}
 	
+	/**
+	 * Retourne l'équipe adverse.
+	 * @return Team l'équipe opposée
+	 */
 	public Team other() {
 		if(this == Team.WHITE) {
 			return Team.BLACK;

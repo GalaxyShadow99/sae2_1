@@ -7,6 +7,11 @@ public class RemoveLine extends Action {
 	private Set<Coordinate> line;
 	private Coordinate ring;
 	
+	/**
+	 * Crée une action de suppression de ligne et d'anneau.
+	 * @param line ensemble des coordonnées de la ligne (Set<Coordinate>)
+	 * @param ring coordonnée de l'anneau à retirer (Coordinate)
+	 */
 	public RemoveLine(Set<Coordinate> line, Coordinate ring) {
 		this.line = line;
 		this.ring = ring;

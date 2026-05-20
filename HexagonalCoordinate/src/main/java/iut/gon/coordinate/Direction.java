@@ -10,6 +10,10 @@ public enum Direction {
 	SO,
 	O;
 	
+	/**
+	 * Retourne la direction opposée.
+	 * @return Direction direction opposée
+	 */
 	public Direction opposite() {
 		switch (this) {
 		case Direction.NO :

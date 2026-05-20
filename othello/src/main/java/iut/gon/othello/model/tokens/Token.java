@@ -17,7 +17,16 @@ public abstract class Token {
 		this.team = team;
 	} 
 	
-	public abstract String charRepr(); 
+	/**
+	 * Retourne la représentation en caractère du token.
+	 * @return String représentation du token
+	 */
+	public abstract String charRepr();
+
+	/**
+	 * Crée une copie du token.
+	 * @return Token copie du token
+	 */
 	public abstract Token clone(); 
 }
 

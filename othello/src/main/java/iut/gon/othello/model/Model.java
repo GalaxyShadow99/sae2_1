@@ -26,18 +26,38 @@ public class Model {
         this.currentState = state;
     }
     
+    /**
+     * Retourne l'ensemble des coordonnées accessibles depuis une position donnée.
+     * @param from Coordonnée de départ (Coordinate)
+     * @return Set<Coordinate> ensemble des déplacements possibles
+     */
     public Set<Coordinate> movesFrom(Coordinate from) {
         return currentState.availableMoves(from); 
     }
     
+    /**
+     * Déplace un anneau d'une case à une autre et met à jour l'état du jeu.
+     * @param from Coordonnée de départ (Coordinate)
+     * @param to Coordonnée d'arrivée (Coordinate)
+     * @throws DifferentAxisException si les coordonnées ne sont pas sur le même axe
+     */
     public void moveRing(Coordinate from, Coordinate to) throws DifferentAxisException {
         currentState = currentState.move(new Move(from, to));
     }
     
+    /**
+     * Supprime une ligne de pions et l'anneau associé du plateau.
+     * @param line ensemble des coordonnées formant la ligne (Set<Coordinate>)
+     * @param ring coordonnée de l'anneau à retirer (Coordinate)
+     */
     public void removeLine(Set<Coordinate> line, Coordinate ring) {
         currentState = currentState.removeLine(new RemoveLine(line, ring));
     }
     
+    /**
+     * Retourne la liste des lignes de 5 pions détectées sur le plateau.
+     * @return List<Set<Coordinate>> liste des lignes de pions
+     */
     public List<Set<Coordinate>> getPawnsLines() {
         return currentState.getPawnsLines(currentState.board());
     }
@@ -58,6 +78,11 @@ public class Model {
         return currentState.rings().get(team); 
     }
     
+    /**
+     * Retourne la liste des coordonnées des pions d'une équipe donnée.
+     * @param team équipe dont on cherche les pions (Team)
+     * @return List<Coordinate> liste des coordonnées des pions
+     */
     public List<Coordinate> getPawns(Team team) {
         List<Coordinate> result = new ArrayList<>();
         
@@ -81,10 +106,20 @@ public class Model {
         return currentState; 
     }
     
+    /**
+     * Retire le token situé à la coordonnée spécifiée.
+     * @param c coordonnée du token à retirer (Coordinate)
+     */
     public void removeToken(Coordinate c) {
         currentState = currentState.removeToken(c);
     }
  
+    /**
+     * Active ou désactive un token à la position donnée pour une équipe.
+     * @param position coordonnée ciblée (Coordinate)
+     * @param team équipe propriétaire du token (Team)
+     * @param token classe du token à placer (Class<?>)
+     */
     public void toggleToken(Coordinate position, Team team, Class<?> token) {
         currentState = currentState.toggleToken(position, team, token);
     }

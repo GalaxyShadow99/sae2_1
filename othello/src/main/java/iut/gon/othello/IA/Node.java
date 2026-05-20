@@ -12,13 +12,23 @@ public class Node {
     Action before;
     double score;
     
+    /**
+     * Crée un nœud de l'arbre de jeu.
+     * @param etat état du jeu (IState)
+     * @param parent nœud parent (Node)
+     * @param before action menant à cet état (Action)
+     */
     public Node(IState etat, Node parent, Action before) {
         this.etat = etat;
         this.parent = parent;
         this.before = before;
     }
     
-    // On donne l'équipe de l'IA en argument pour que l'évaluation soit orientée 
+    /**
+     * Évalue la qualité de l'état pour une équipe donnée.
+     * @param myTeam l'équipe à évaluer (Team)
+     * @return double le score d'évaluation
+     */
     public double evaluate(Team myTeam) {
         Team opponent = myTeam.other();
         double currentScore = 0;
@@ -58,18 +68,34 @@ public class Node {
         return currentScore;
     }
 
+    /**
+     * Retourne l'état du jeu de ce nœud.
+     * @return IState état du jeu
+     */
     public IState getEtat() {
         return etat;
     }
 
+    /**
+     * Retourne le nœud parent.
+     * @return Node nœud parent
+     */
     public Node getParent() {
         return parent;
     }
 
+    /**
+     * Retourne l'action menant à ce nœud.
+     * @return Action action précédente
+     */
     public Action getBefore() {
         return before;
     }
     
+    /**
+     * Retourne le score évalué du nœud.
+     * @return double score du nœud
+     */
     public double getScore() {
         return score;
     }

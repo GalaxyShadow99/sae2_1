@@ -6,6 +6,11 @@ public class Move extends Action{
 	private Coordinate from;
 	private Coordinate to;
 	
+	/**
+	 * Crée un déplacement d'une coordonnée source vers une destination.
+	 * @param from coordonnée de départ (Coordinate)
+	 * @param to coordonnée d'arrivée (Coordinate)
+	 */
 	public Move(Coordinate from, Coordinate to) {
 		this.from = from;
 		this.to = to;
