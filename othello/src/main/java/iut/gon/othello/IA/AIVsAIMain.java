@@ -24,7 +24,7 @@ public class AIVsAIMain {
     
     public static void main(String[] args) throws DifferentAxisException {
         
-        System.out.println("=== SIMULATION IA vs IA : OTHELLO HEXAGONAL ===");
+        System.out.println("=== BIENVENUE DANS OTHELLO HEXAGONAL ===");
         
         IState state;
         
@@ -32,14 +32,13 @@ public class AIVsAIMain {
             IFactory factory = new FactoryDoubled();
             state = factory.emptyState();
         } catch (Exception e) {
-            System.out.println("Erreur : Impossible de charger le terrain vierge.");
+            System.out.println("Erreur : Impossible de charger le terrain vide.");
             return;
         }
         
         state = initializeRandomRings(state);
-        System.out.println("Terrain initialise avec 5 anneaux par equipe places aleatoirement.\n");
+        System.out.println("Terrain initialisé avec 5 anneaux par équipe placés aleatoirement.\n");
         
-        // Initialisation des deux IA (tu peux varier la profondeur pour voir laquelle gagne)
         AI aiWhite = new MiniMaxAI(3, state, Team.WHITE); 
         AI aiBlack = new MiniMaxAI(3, state, Team.BLACK); 
         
@@ -50,51 +49,47 @@ public class AIVsAIMain {
 
             Team winner = state.winner();
             if (winner != null) {
-                System.out.println("\n=========================================");
-                System.out.println("Felicitations ! L'equipe " + winner + " a gagne la partie !");
-                System.out.println("=========================================");
+                System.out.println("Félicitations ! L'équipe " + winner + " a gagné la partie !");
                 break;
             }
 
-            // Détermination de l'IA dont c'est le tour
             AI currentAI = (state.turn() == Team.WHITE) ? aiWhite : aiBlack;
 
-            // Pause pour pouvoir observer la partie humainement (1.5 secondes)
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
-            // PHASE 1 : GESTION DES LIGNES
             if (state.lines() != null && !state.lines().isEmpty()) {
-                System.out.println("Alignement de 5 pions detecte ! L'IA (" + state.turn() + ") doit supprimer une ligne et un anneau...");
+                System.out.println("Alignement de 5 pions détecté ! L'équipe " + state.turn() + " doit supprimer une ligne et un anneau.");
+                System.out.println("L'IA (" + state.turn() + ") réflechit pour supprimer une ligne...");
                 
                 Action aiAction = currentAI.chooseMove(state);
                 try {
                     state = state.removeLine((RemoveLine) aiAction);
-                    System.out.println("Succes : L'IA " + state.turn() + " a retire une ligne et un anneau.");
+                    System.out.println("L'IA a retiré une ligne et un anneau.");
                 } catch (Exception e) {
-                    System.out.println("Erreur fatale de l'IA " + state.turn() + " lors du RemoveLine : " + e.getMessage());
+                    System.out.println("Erreur IA lors du RemoveLine : " + e.getMessage());
                     gameRunning = false;
                 }
                 continue; 
             }
 
-            // PHASE 2 : GESTION DES DEPLACEMENTS
-            System.out.println("C'est au tour de l'equipe : " + state.turn() + ". L'IA reflechit...");
+            System.out.println("C'est au tour de l'equipe : " + state.turn());
+            System.out.println("L'IA (" + state.turn() + ") réflechit a son déplacement...");
             
             Action aiAction = currentAI.chooseMove(state);
             try {
                 state = state.move((Move) aiAction);
-                System.out.println("L'IA " + state.turn() + " a effectue son deplacement.");
+                System.out.println("L'IA a joué.");
             } catch (Exception e) {
-                System.out.println("Erreur fatale de l'IA " + state.turn() + " lors du Move : " + e.getMessage());
+                System.out.println("Erreur de l'IA lors du déplacement : " + e.getMessage());
                 gameRunning = false;
             }
         }
 
-        System.out.println("=== FIN DE LA SIMULATION ===");
+        System.out.println("=== FIN DE LA PARTIE ===");
     }
 
     private static IState initializeRandomRings(IState state) {
@@ -155,27 +150,31 @@ public class AIVsAIMain {
         }
 
         System.out.println("\n=========================== PLATEAU DE JEU ===========================");
-        System.out.println("              [ Axe X (Ouest / Est) ]");
         
-        System.out.print("            ");
-        for (int x = minX; x <= maxX; x++) {
-            int absX = Math.abs(x);
-            System.out.print((absX >= 10 ? (absX / 10) : " ") + " ");
+        System.out.println("               [ Axe X (Ouest / Est) ]");
+        
+        System.out.print("             ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x >= 10 ? (x / 10) : " ") + " ");
         }
         System.out.println();
         
-        System.out.print("            ");
-        for (int x = minX; x <= maxX; x++) {
-            int absX = Math.abs(x);
-            System.out.print((absX % 10) + " ");
+        System.out.print("             ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x % 10) + " ");
         }
-        System.out.println("\n            " + "--".repeat(width));
+        System.out.println("\n            -" + "--".repeat(width));
 
-        for (int y = minY; y <= maxY; y++) {
-            System.out.printf("[Axe Y] %2d | ", y);
+        for (int y = 0; y < height; y++) {
             
-            for (int x = minX; x <= maxX; x++) {
-                System.out.print(grid[y - minY][x - minX] + " ");
+            if (y == height / 2) {
+                System.out.printf("[Axe Y] %2d | ", y);
+            } else {
+                System.out.printf("        %2d | ", y);
+            }
+            
+            for (int x = 0; x < width; x++) {
+                System.out.print(grid[y][x] + " ");
             }
             System.out.println();
         }

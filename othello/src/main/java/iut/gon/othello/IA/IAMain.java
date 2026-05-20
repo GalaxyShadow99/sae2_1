@@ -36,15 +36,19 @@ public class IAMain {
             IFactory factory = new FactoryDoubled();
             state = factory.emptyState();
         } catch (Exception e) {
-            System.out.println("Erreur : Impossible de charger le terrain vierge.");
+            System.out.println("Erreur : Impossible de charger le terrain vide.");
             scanner.close();
             return;
         }
         
         state = initializeRandomRings(state);
-        System.out.println("Terrain initialise avec 5 anneaux par equipe places aleatoirement.\n");
+        System.out.println("Terrain initialisé avec 5 anneaux par équipe placés aleatoirement.\n");
         
-        AI ai = new MiniMaxAI(3, state, Team.BLACK); 
+        System.out.print("Choisissez la profondeur de l'IA (chiffre entier) : ");
+        int profondeur = readInt(scanner);
+        
+        AI ai = new MiniMaxAI(profondeur, state, Team.BLACK); 
+        
         
         boolean gameRunning = true;
 
@@ -53,15 +57,14 @@ public class IAMain {
 
             Team winner = state.winner();
             if (winner != null) {
-                System.out.println("Felicitations ! L'equipe " + winner + " a gagne la partie !");
+                System.out.println("Félicitations ! L'equipe " + winner + " a gagné la partie !");
                 break;
             }
 
             boolean isHumanTurn = (state.turn() == Team.WHITE);
 
-            // PHASE 1 : GESTION DES LIGNES
             if (state.lines() != null && !state.lines().isEmpty()) {
-                System.out.println("Alignement de 5 pions detecte ! L'equipe " + state.turn() + " doit supprimer une ligne et un anneau.");
+                System.out.println("Alignement de 5 pions detecte ! L'équipe " + state.turn() + " doit supprimer une ligne et un anneau.");
                 
                 if (isHumanTurn) {
                     state = handleRemoveLine(state, scanner);
@@ -70,16 +73,15 @@ public class IAMain {
                     Action aiAction = ai.chooseMove(state);
                     try {
                         state = state.removeLine((RemoveLine) aiAction);
-                        System.out.println("L'IA a retire une ligne et un anneau.");
+                        System.out.println("L'IA a retiré une ligne et un anneau.");
                     } catch (Exception e) {
                         System.out.println("Erreur IA lors du RemoveLine : " + e.getMessage());
                         gameRunning = false;
                     }
                 }
-                continue; // On repart au début de la boucle pour revérifier si d'autres lignes existent
+                continue; 
             }
 
-            // PHASE 2 : GESTION DES DEPLACEMENTS
             System.out.println("C'est au tour de l'equipe : " + state.turn());
             
             if (isHumanTurn) {
@@ -133,21 +135,21 @@ public class IAMain {
             int fromY = readInt(scanner);
             Coordinate from = findCoordinate(state, fromX, fromY);
 
-            System.out.print("Entrez la colonne (X) de la case d'arrivee : ");
+            System.out.print("Entrez la colonne (X) de la case d'arrivée : ");
             int toX = readInt(scanner);
-            System.out.print("Entrez la ligne (Y) de la case d'arrivee : ");
+            System.out.print("Entrez la ligne (Y) de la case d'arrivée : ");
             int toY = readInt(scanner);
             Coordinate to = findCoordinate(state, toX, toY);
 
             if (from == null || to == null) {
-                System.out.println("Erreur : Coordonnees introuvables. Reessayez.");
+                System.out.println("Erreur : Coordonnées introuvables. Réessayez.");
                 continue;
             }
 
             try {
                 return state.move(new Move(from, to));
             } catch (Exception e) {
-                System.out.println("Mouvement invalide : " + e.getMessage() + " Veuillez reessayer.");
+                System.out.println("Mouvement invalide : " + e.getMessage() + " Veuillez réessayer.");
             }
         }
     }
@@ -174,7 +176,7 @@ public class IAMain {
             }
             Set<Coordinate> chosenLine = availableLines.get(choice - 1);
 
-            System.out.println("Choix de l'anneau a retirer du plateau :");
+            System.out.println("Choix de l'anneau à retirer du plateau :");
             System.out.print("Colonne (X) de l'anneau : ");
             int ringX = readInt(scanner);
             System.out.print("Ligne (Y) de l'anneau : ");
@@ -182,7 +184,7 @@ public class IAMain {
             Coordinate chosenRing = findCoordinate(state, ringX, ringY);
 
             if (chosenRing == null) {
-                System.out.println("Coordonnees de l'anneau introuvables. Reessayez.");
+                System.out.println("Coordonnées de l'anneau introuvables. Réessayez.");
                 continue;
             }
 
@@ -241,27 +243,31 @@ public class IAMain {
         }
 
         System.out.println("\n=========================== PLATEAU DE JEU ===========================");
-        System.out.println("              [ Axe X (Ouest / Est) ]");
         
-        System.out.print("            ");
-        for (int x = minX; x <= maxX; x++) {
-            int absX = Math.abs(x);
-            System.out.print((absX >= 10 ? (absX / 10) : " ") + " ");
+        System.out.println("               [ Axe X (Ouest / Est) ]");
+        
+        System.out.print("             ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x >= 10 ? (x / 10) : " ") + " ");
         }
         System.out.println();
         
-        System.out.print("            ");
-        for (int x = minX; x <= maxX; x++) {
-            int absX = Math.abs(x);
-            System.out.print((absX % 10) + " ");
+        System.out.print("             ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x % 10) + " ");
         }
-        System.out.println("\n            " + "--".repeat(width));
+        System.out.println("\n            -" + "--".repeat(width));
 
-        for (int y = minY; y <= maxY; y++) {
-            System.out.printf("[Axe Y] %2d | ", y);
+        for (int y = 0; y < height; y++) {
             
-            for (int x = minX; x <= maxX; x++) {
-                System.out.print(grid[y - minY][x - minX] + " ");
+            if (y == height / 2) {
+                System.out.printf("[Axe Y] %2d | ", y);
+            } else {
+                System.out.printf("        %2d | ", y);
+            }
+            
+            for (int x = 0; x < width; x++) {
+                System.out.print(grid[y][x] + " ");
             }
             System.out.println();
         }

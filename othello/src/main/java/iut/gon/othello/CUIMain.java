@@ -22,26 +22,23 @@ import java.util.Set;
 
 public class CUIMain {
 
-    private static int offsetX = 0;
-    private static int offsetY = 0;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("=== BIENVENUE DANS OTHELLO HEXAGONAL ===");
+        System.out.println("=== BIENVENUE DANS OTHELLO ===");
         
         IState state;
         try {
             IFactory factory = new FactoryDoubled();
             state = factory.emptyState();
         } catch (Exception e) {
-            System.out.println("Erreur : Impossible de charger le terrain vierge.");
+            System.out.println("Erreur : Impossible de charger le terrain vide.");
             scanner.close();
             return;
         }
 
         state = initializeRandomRings(state);
-        System.out.println("Terrain initialise avec 5 anneaux par equipe places aleatoirement.\n");
+        System.out.println("Terrain initialisé avec 5 anneaux par équipe placés aléatoirement.\n");
 
         boolean gameRunning = true;
 
@@ -50,17 +47,17 @@ public class CUIMain {
 
             Team winner = state.winner();
             if (winner != null) {
-                System.out.println("Felicitations ! L'equipe " + winner + " a gagne la partie !");
+                System.out.println("Félicitations ! L'équipe " + winner + " a gagné la partie !");
                 break;
             }
 
             if (state.lines() != null && !state.lines().isEmpty()) {
-                System.out.println("Alignement de 5 pions detecte ! " + state.turn() + " doit supprimer une ligne et un anneau.");
+                System.out.println("Alignement de 5 pions detecté ! " + state.turn() + " doit supprimer une ligne et un anneau.");
                 state = handleRemoveLine(state, scanner);
                 continue;
             }
 
-            System.out.println("C'est au tour de l'equipe : " + state.turn());
+            System.out.println("C'est au tour de l'équipe : " + state.turn());
             state = handlePlayerMove(state, scanner);
         }
 
@@ -92,7 +89,7 @@ public class CUIMain {
     private static IState handlePlayerMove(IState state, Scanner scanner) {
         while (true) {
             System.out.println("\n--- Deplacement d'un anneau ---");
-            System.out.println("Regardez le plateau pour trouver un anneau de votre equipe (◯ ou ●).");
+            System.out.println("Regardez le plateau pour trouver un anneau de votre équipe (◯ ou ●).");
             
             System.out.print("Entrez la colonne (X) de l'anneau de depart : ");
             int fromX = readInt(scanner);
@@ -107,14 +104,14 @@ public class CUIMain {
             Coordinate to = findCoordinate(state, toX, toY);
 
             if (from == null || to == null) {
-                System.out.println("Erreur : Coordonnees introuvables. Reessayez.");
+                System.out.println("Erreur : Coordonnées introuvables. Réessayez.");
                 continue;
             }
 
             try {
                 return state.move(new Move(from, to));
             } catch (Exception e) {
-                System.out.println("Mouvement invalide : " + e.getMessage() + " Veuillez reessayer.");
+                System.out.println("Mouvement invalide : " + e.getMessage() + " Veuillez réessayer.");
             }
         }
     }
@@ -123,20 +120,20 @@ public class CUIMain {
         List<Set<Coordinate>> availableLines = state.lines();
         
         while (true) {
-            System.out.println("\n--- Choix de la ligne a supprimer ---");
+            System.out.println("\n--- Choix de la ligne à supprimer ---");
             for (int i = 0; i < availableLines.size(); i++) {
                 System.out.print("Ligne " + (i + 1) + " : ");
                 for (Coordinate c : availableLines.get(i)) {
                     Point p = c.to2DCoordinate();
-                    System.out.print("[X:" + (p.x() - offsetX) + ", Y:" + (p.y() - offsetY) + "] ");
+                    System.out.print("[X:" + p.x() + ", Y:" + p.y() + "] ");
                 }
                 System.out.println();
             }
 
-            System.out.print("Entrez le NUMERO de la ligne a supprimer : ");
+            System.out.print("Entrez le NUMERO de la ligne à supprimer : ");
             int choice = readInt(scanner);
             if (choice < 1 || choice > availableLines.size()) {
-                System.out.println("Numero de ligne invalide. Reessayez.");
+                System.out.println("Numero de ligne invalide. Réessayez.");
                 continue;
             }
             Set<Coordinate> chosenLine = availableLines.get(choice - 1);
@@ -149,7 +146,7 @@ public class CUIMain {
             Coordinate chosenRing = findCoordinate(state, ringX, ringY);
 
             if (chosenRing == null) {
-                System.out.println("Coordonnees de l'anneau introuvables. Reessayez.");
+                System.out.println("Coordonnées de l'anneau introuvables. Réessayez.");
                 continue;
             }
 
@@ -162,9 +159,9 @@ public class CUIMain {
     }
 
     private static Coordinate findCoordinate(IState state, int displayX, int displayY) {
-        int realX = displayX + offsetX;
-        int realY = displayY + offsetY;
-
+        int realX = displayX;
+        int realY = displayY;
+        
         for (Coordinate coord : state.board().keySet()) {
             Point p = coord.to2DCoordinate();
             if (p.x() == realX && p.y() == realY) {
@@ -193,22 +190,16 @@ public class CUIMain {
             if (p.y() > maxY) maxY = p.y();
         }
 
-        offsetX = minX;
-        offsetY = minY;
-
-        // X = horizontal (largeur/width, gère Ouest/Est), Y = vertical (hauteur/height, gère Nord/Sud)
         int width = maxX - minX + 1;
         int height = maxY - minY + 1;
         char[][] grid = new char[height][width];
 
-        // Initialisation du tableau avec des espaces
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 grid[y][x] = ' ';
             }
         }
 
-        // Remplissage classique (y pour les lignes, x pour les colonnes)
         for (Map.Entry<Coordinate, Token> entry : state.board().entrySet()) {
             Coordinate coord = entry.getKey();
             Token token = entry.getValue();
