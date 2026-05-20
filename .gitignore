@@ -3,11 +3,13 @@
 **/target/
 
 *.class
+.classpath
+.project
 
 **/.idea
 **/.metadata
 **/.recommenders
 .DS_Store
+**/.settings
 **/.project
 **/.classpath
-**/.settings
