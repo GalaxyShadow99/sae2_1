@@ -6,12 +6,12 @@ import iut.gon.othello.model.state.IState;
 
 public class Node {
 	IState etat;
-	Node parents;
+	Node parent;
 	Action before;
 	public Node(IState etat, Node parents, Action before) {
 		super();
 		this.etat = etat;
-		this.parents = parents;
+		this.parent = parents;
 		this.before = before;
 	}
 	
