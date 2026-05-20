@@ -1,4 +1,4 @@
-package iut.gon.othello.cui;
+package iut.gon.othello;
 
 import iut.gon.othello.model.Team;
 import iut.gon.othello.model.actions.Move;
@@ -92,17 +92,17 @@ public class CUIMain {
     private static IState handlePlayerMove(IState state, Scanner scanner) {
         while (true) {
             System.out.println("\n--- Deplacement d'un anneau ---");
-            System.out.println("Regardez le plateau pour trouver un anneau de votre equipe (o ou O).");
+            System.out.println("Regardez le plateau pour trouver un anneau de votre equipe (◯ ou ●).");
             
-            System.out.print("Entrez la ligne (X) de l'anneau de depart : ");
+            System.out.print("Entrez la colonne (X) de l'anneau de depart : ");
             int fromX = readInt(scanner);
-            System.out.print("Entrez la colonne (Y) de l'anneau de depart : ");
+            System.out.print("Entrez la ligne (Y) de l'anneau de depart : ");
             int fromY = readInt(scanner);
             Coordinate from = findCoordinate(state, fromX, fromY);
 
-            System.out.print("Entrez la ligne (X) de la case d'arrivee : ");
+            System.out.print("Entrez la colonne (X) de la case d'arrivee : ");
             int toX = readInt(scanner);
-            System.out.print("Entrez la colonne (Y) de la case d'arrivee : ");
+            System.out.print("Entrez la ligne (Y) de la case d'arrivee : ");
             int toY = readInt(scanner);
             Coordinate to = findCoordinate(state, toX, toY);
 
@@ -142,9 +142,9 @@ public class CUIMain {
             Set<Coordinate> chosenLine = availableLines.get(choice - 1);
 
             System.out.println("Choix de l'anneau a retirer du plateau :");
-            System.out.print("Ligne (X) de l'anneau : ");
+            System.out.print("Colonne (X) de l'anneau : ");
             int ringX = readInt(scanner);
-            System.out.print("Colonne (Y) de l'anneau : ");
+            System.out.print("Ligne (Y) de l'anneau : ");
             int ringY = readInt(scanner);
             Coordinate chosenRing = findCoordinate(state, ringX, ringY);
 
@@ -196,49 +196,52 @@ public class CUIMain {
         offsetX = minX;
         offsetY = minY;
 
-        int height = maxX - minX + 1;
-        int width = maxY - minY + 1;
+        // X = horizontal (largeur/width, gère Ouest/Est), Y = vertical (hauteur/height, gère Nord/Sud)
+        int width = maxX - minX + 1;
+        int height = maxY - minY + 1;
         char[][] grid = new char[height][width];
 
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
-                grid[x][y] = ' ';
+        // Initialisation du tableau avec des espaces
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                grid[y][x] = ' ';
             }
         }
 
+        // Remplissage classique (y pour les lignes, x pour les colonnes)
         for (Map.Entry<Coordinate, Token> entry : state.board().entrySet()) {
             Coordinate coord = entry.getKey();
             Token token = entry.getValue();
             Point p = coord.to2DCoordinate();
-            grid[p.x() - minX][p.y() - minY] = getTokenChar(token);
+            grid[p.y() - minY][p.x() - minX] = getTokenChar(token);
         }
 
         System.out.println("\n=========================== PLATEAU DE JEU ===========================");
         
-        System.out.println("           [ Axe Y ]");
+        System.out.println("               [ Axe X (Ouest / Est) ]");
         
         System.out.print("             ");
-        for (int y = 0; y < width; y++) {
-            System.out.print((y >= 10 ? (y / 10) : " ") + " ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x >= 10 ? (x / 10) : " ") + " ");
         }
         System.out.println();
         
         System.out.print("             ");
-        for (int y = 0; y < width; y++) {
-            System.out.print((y % 10) + " ");
+        for (int x = 0; x < width; x++) {
+            System.out.print((x % 10) + " ");
         }
-        System.out.println("\n             " + "--".repeat(width));
+        System.out.println("\n            -" + "--".repeat(width));
 
-        for (int x = 0; x < height; x++) {
+        for (int y = 0; y < height; y++) {
             
-            if (x == height / 2) {
-                System.out.printf("[Axe X] %2d | ", x);
+            if (y == height / 2) {
+                System.out.printf("[Axe Y] %2d | ", y);
             } else {
-                System.out.printf("        %2d | ", x);
+                System.out.printf("        %2d | ", y);
             }
             
-            for (int y = 0; y < width; y++) {
-                System.out.print(grid[x][y] + " ");
+            for (int x = 0; x < width; x++) {
+                System.out.print(grid[y][x] + " ");
             }
             System.out.println();
         }
@@ -246,9 +249,9 @@ public class CUIMain {
     }
 
     private static char getTokenChar(Token token) {
-        if (token == null) return '_';
-        if (token instanceof Ring) return token.getTeam() == Team.WHITE ? 'o' : 'O';
-        if (token instanceof Pawn) return token.getTeam() == Team.WHITE ? '.' : 'x';
+        if (token == null) return '•';
+        if (token instanceof Ring) return token.getTeam() == Team.WHITE ? '◯' : '●';
+        if (token instanceof Pawn) return token.getTeam() == Team.WHITE ? '♙' : '♟';
         return '?';
     }
 
