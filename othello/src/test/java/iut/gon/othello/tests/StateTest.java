@@ -92,25 +92,24 @@ class StateTest {
 
         assertNotNull(moves);
     }
-
     @Test
     void testMove() throws DifferentAxisException {
         IFactory factory = new FactoryDoubled();
 
-        IState state = factory.emptyState();
+        IState state = factory.testState();
 
-        Coordinate from = new CoordinateDoubled(0, 0);
-        Coordinate to = new CoordinateDoubled(2, 0);
+        Coordinate from = new CoordinateDoubled(4, -2); 
+        Coordinate to = new CoordinateDoubled(6, -2); 
 
         Move move = new Move(from, to);
 
         try {
             state.move(move);
         } catch (Exception e) {
-            fail("Move ne doit pas lancer d'exception.");
+            fail("Move ne doit pas lancer d'exception. + " + e.getStackTrace());
         }
     }
-
+    
     @Test
     void testRemoveLine() {
         IFactory factory = new FactoryDoubled();

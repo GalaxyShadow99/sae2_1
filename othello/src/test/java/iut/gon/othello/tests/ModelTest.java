@@ -63,14 +63,16 @@ class ModelTest {
     void testGetTokenAt() {
         IFactory factory = new FactoryDoubled();
 
-        Model model = new Model(factory.testState());
+        Model model = new Model(factory.stateForWhiteLinesTest());
 
         Coordinate coord = new CoordinateDoubled(6, 3);
 
+
         Token token = model.getTokenAt(coord);
 
+        
         assertNotNull(token);
-        assertEquals(Team.WHITE, token.getTeam());
+        assertEquals(Team.BLACK, token.getTeam());
     }
 
     @Test
@@ -136,10 +138,10 @@ class ModelTest {
     void testMoveRing() throws DifferentAxisException {
         IFactory factory = new FactoryDoubled();
 
-        Model model = new Model(factory.emptyState());
-
+        Model model = new Model(factory.testState());
         Coordinate from = new CoordinateDoubled(5, 2);
         Coordinate to = new CoordinateDoubled(2, 0);
+
 
         try {
             model.moveRing(from, to);

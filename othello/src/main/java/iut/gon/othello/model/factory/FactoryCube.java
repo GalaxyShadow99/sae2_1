@@ -18,7 +18,7 @@ import iut.gon.othello.model.tokens.Token;
 public class FactoryCube implements IFactory {
 
     private Map<Coordinate, Token> generateEmptyGrid() {
-        Map<Coordinate, Token> terrain = new HashMap<>();
+        HashMap<Coordinate, Token> terrain = new HashMap<>();
         
         int[][] limitesQ = {
             { 1, 4 }, {-1, 5 }, {-2, 5 }, {-3, 5 }, {-4, 5 },
