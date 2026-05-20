@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List; 
 import java.util.Set;
 import java.util.Map; 
-import java.util.stream.Collectors; 
 
 public class Model {
     
@@ -68,7 +67,7 @@ public class Model {
             if (entry.getValue() instanceof Pawn && entry.getValue().getTeam() == team) {
                 result.add(entry.getKey());
                 //entry.getValue() : on veut le token de la case
-                //result.add(entry.getKey()) : si les 2 conditions sont vrais  ça ajoute la coordonné à la liste
+                //result.add(entry.getKey()) : si les 2 conditions sont vrais  ça ajoute la coordonnée à la liste
             }
         }
         return result;
@@ -81,4 +80,13 @@ public class Model {
     public IState getCurrentState() {
         return currentState; 
     }
+    
+    public void removeToken(Coordinate c) {
+        currentState = currentState.removeToken(c);
+    }
+ 
+    public void toggleToken(Coordinate position, Team team, Class<?> token) {
+        currentState = currentState.toggleToken(position, team, token);
+    }
+
 }
