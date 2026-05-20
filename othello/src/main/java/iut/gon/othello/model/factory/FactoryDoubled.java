@@ -16,10 +16,6 @@ import iut.gon.othello.model.tokens.Token;
 
 public class FactoryDoubled implements IFactory {
 
-    /**
-     * Utilisé uniquement pour générer le quadrillage vide.
-     * Applique la conversion mathématique pour correspondre à l'ordre (Ligne, Colonne) ou (y, x).
-     */
     private CoordinateDoubled toDoubled(int q, int r) {
         int y = r + 5;
         int x = (2 * q + r) + 9;
@@ -29,20 +25,29 @@ public class FactoryDoubled implements IFactory {
     private HashMap<Coordinate, Token> generateEmptyGrid() {
         HashMap<Coordinate, Token> terrain = new HashMap<>();
         
-        int[][] limitesQ = {
-            { 1, 4 }, {-1, 5 }, {-2, 5 }, {-3, 5 }, {-4, 5 },
-            {-4, 4 }, {-5, 4 }, {-5, 3 }, {-5, 2 }, {-5, 1 }, {-4,-1 }
-        };
+        int[][] limitesX = {
+                { 6, 12 }, // Ligne 0
+                { 3, 15 }, 
+                { 2, 16 }, 
+                { 1, 17 }, 
+                { 0, 18 }, 
+                { 1, 17 }, 
+                { 0, 18 }, 
+                { 1, 17 }, 
+                { 2, 16 }, 
+                { 3, 15 }, 
+                { 6, 12 }  // Ligne 10
+            };
 
-        for (int r = -5; r <= 5; r++) {
-            int qMin = limitesQ[r + 5][0];
-            int qMax = limitesQ[r + 5][1];
-            for (int q = qMin; q <= qMax; q++) {
-                terrain.put(toDoubled(q, r), null); 
+            for (int y = 0; y <= 10; y++) {
+                int xMin = limitesX[y][0];
+                int xMax = limitesX[y][1];
+                
+                for (int x = xMin; x <= xMax; x += 2) {
+                    terrain.put(new CoordinateDoubled(y, x), null); 
+                }
             }
-        }
-        return terrain;
-    }
+            return terrain;    }
 
     private void CoordonnesCommunes(Map<Coordinate, Token> grid) {
         // PIONS BLANCS COMMUNS
