@@ -10,7 +10,7 @@ L'objectif principal est de concevoir et développer en Java la logique métier 
 
 Le jeu s'exécute entièrement dans le terminal. Voici un aperçu de l'affichage textuel du plateau de jeu et des interactions utilisateur :
 
-![Interface Console](ReadmeImages/Capture_Console.png)
+![Interface Console](ReadmeImages/img.png)
 
 *Légende : `◯` / `●` représentent les anneaux, `♙` / `♟` représentent les pions, et `•` les intersections libres.*
 
